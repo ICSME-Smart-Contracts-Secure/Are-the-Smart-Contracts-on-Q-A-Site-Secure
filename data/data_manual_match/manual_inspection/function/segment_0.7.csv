@@ -1,0 +1,4085 @@
+sni_index,code_index,sni,bleu,code
+5.0,114766.0,"function transfer(address _to, uint256 _value) { 
+        if (_to == 0x0) throw;                               
+        if (balanceOf[owner] < _value) throw;                
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw; 
+        balanceOf[owner] -= _value;                          
+        balanceOf[_to] += _value;                            
+        Transfer(owner, _to, _value);                        
+
+        
+        ShowLogstr(_value);
+        ShowCurrentTokenOfOwner(owner,balanceOf[owner]);
+        ShowCurrentTokenOfTransferAccount(_to,balanceOf[_to]);
+    }",0.7138798614436659,"function transfer(address _to, uint256 _value, string _dataPutOnChain) {
+
+        _onChainData = _dataPutOnChain;
+
+        if (_to == 0x0) throw;                               
+
+		if (_value <= 0) throw; 
+
+        if (balanceOf[msg.sender] < _value) throw;           
+
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw; 
+
+        balanceOf[msg.sender] = SafeMath.safeSub(balanceOf[msg.sender], _value);                     
+
+        balanceOf[_to] = SafeMath.safeAdd(balanceOf[_to], _value);                            
+
+        Transfer(msg.sender, _to, _value);                   
+
+    }"
+45.0,24205.0,"function () payable {
+        if (crowdsaleClosed) throw;
+        uint amount = msg.value;  
+        balanceOf[msg.sender] = amount;
+        amountRaised += amount;
+        tokenReward.transfer(msg.sender, amount / price);
+        FundTransfer(msg.sender, amount, true);
+    }",0.7726417050657698,"function purchase() internal {
+        uint amount = msg.value;
+        balanceOf[msg.sender] += amount;
+        amountRaised += amount;
+        tokenReward.transferFrom(beneficiary, msg.sender, (amount * price) / 1 ether);
+        checkGoalReached();
+        FundTransfer(msg.sender, amount, true);
+    }"
+48.0,109946.0,"function beneficiarySafeWithdrawal() afterDeadline {
+        if(creator!=msg.sender) throw;
+        if (fundingGoalReached) {
+            if (beneficiary.send(amountRaised)) {
+                FundTransfer(beneficiary, amountRaised, false);
+            } else {
+                
+                fundingGoalReached = false;
+            }
+        }
+    }",0.7093062173116881,"function safeWithdrawalAll() {
+        if ( beneficiary == msg.sender) {
+            if (beneficiary.send(amountRaised)) {
+                FundTransfer(beneficiary, amountRaised, false);
+				remainAmount = remainAmount - amountRaised;
+            } else {
+				WithdrawFailed(beneficiary, amountRaised, false);
+				
+            }
+        }
+    }"
+54.0,107926.0,"function assign(DataSet storage self) internal {
+        self.a = 2;
+    }",0.772845378473759,"function resetIndex (Data storage self) internal {
+
+		self.len = 0;
+
+	}"
+56.0,114873.0,"function burnTokens(uint256 _value) onlyOwner {
+
+         require(balances[msg.sender] >= _value && _value > 0 );
+         _totalSupply = _totalSupply.sub(_value);
+         balances[msg.sender] = balances[msg.sender].sub(_value);
+
+    }",0.7622051170193743,"function burn(uint256 _value) onlyOwner public {
+
+        require(_value <= balances[msg.sender]);
+
+
+
+
+
+        address burner = msg.sender;
+
+        balances[burner] = balances[burner] - _value;
+
+        totalSupply = totalSupply - _value;
+
+        emit Burn(burner, _value);
+
+    }"
+57.0,91599.0,"function createTokens() payable {
+        if(isMinting == true){
+            require(msg.value > 0);
+            uint256  tokens = msg.value.div(100000000000000).mul(RATE);
+            balances[msg.sender] = balances[msg.sender].add(tokens);
+            _totalSupply = _totalSupply.add(tokens);
+            owner.transfer(msg.value);
+        }
+        else{
+            throw;
+        }
+    }",0.7607269303175765,"function createTokens() payable {
+            if(isMinting == true){
+                require(msg.value > 0);
+                RATE = getETH2TokenRate();
+                uint256 tokens = msg.value.div(1000000000000000).mul(RATE).div(100000);
+                _totalSupply = _totalSupply.add(tokens);
+                balances[msg.sender] = balances[msg.sender].add(tokens);
+                Transfer(this, msg.sender, tokens);
+                owner.transfer(msg.value);
+            }
+            else{
+                throw;
+            }
+        }"
+75.0,30290.0,"function Token(
+        ) {
+        balances[msg.sender] = 450;               
+        totalSupply = 450;                        
+        name = ""jkj"";                                   
+        decimals = 1;                            
+        symbol = ""jjj"";                               
+    }",0.7627009798149559,"function ERC20Token(
+        ) {
+        balances[msg.sender] = 100;               
+        totalSupply = 100;                        
+        name = ""Joker"";                                   
+        decimals = 0;                            
+        symbol = ""JKR"";                               
+    }"
+101.0,122173.0,"function withdrawTokens(uint256 _amount) { if(msg.sender!=wallet) throw; tokenReward.transfer(wallet,_amount); }",0.7217472496073296,"function TransferTokens(address _to, uint _amount) {
+        if (beneficiary != msg.sender) throw;
+        tokenReward.transfer(_to, _amount);
+    }"
+112.0,42923.0,"function addUser(address pubkey) public {
+
+  }",0.7056993689310586,function burnTokens(address _address) public{}
+128.0,69836.0,"function modifyGlobalTokenURI(string _tokenURI) public onlyManager {
+  _globalTokenURI = _tokenURI;
+}",0.7792310910117356,"function setBaseTokenURI(string memory _newTokenURI) public onlyManager {
+
+        _tokenURI = _newTokenURI;
+
+    }"
+139.0,103568.0,"function distribute(address _receiver, uint _amount) private {
+    
+    require(_amount > 0);
+    
+    require(balances[_receiver] + _amount > balances[_receiver]);
+
+    
+    balances[distributor] -= _amount;
+    balances[_receiver] += _amount;
+}",0.7153075462357696,"function send(address receiver, uint amount) public {
+        require(amount <= balanceOf[msg.sender], ""Insufficient balance."");
+        balanceOf[msg.sender] -= amount;
+        balanceOf[receiver] += amount;
+        emit Sent(msg.sender, receiver, amount);
+    }"
+158.0,105652.0,"function () public payable {
+      require(msg.data.length == 0);
+      DoSomething();
+    }",0.7409394222947943,"function() public payable {
+
+    require(msg.data.length == 0, ""Not in use"");
+
+  }"
+160.0,119716.0,"function d(uint num) public pure {
+    num += 2; 
+}",0.7158418695191255,"function add(uint num) public {
+        total = total + num;
+    }"
+181.0,17387.0,"function vote(uint proposal) {
+    Voter sender = voters[msg.sender];
+    require(!sender.voted);
+    sender.voted = true;
+    sender.vote = proposal;
+
+    
+    
+    
+    proposals[proposal].voteCount += sender.weight;
+}",0.7931397666335689,"function vote(uint8 proposal) {
+        Voter sender = voters[msg.sender];
+        if (sender.voted || proposal >= proposals.length) return;
+        sender.voted = true;
+        sender.vote = proposal;
+        proposals[proposal].voteCount += sender.weight;
+    }"
+200.0,6654.0,"function claimOwnership1() public {
+    owner = pendingOwner;
+    pendingOwner = address(0);
+}",0.7852758442004555,"function claimOwnership() onlyPendingOwner {
+    owner = pendingOwner;
+    pendingOwner = 0x0;
+  }"
+201.0,6654.0,"function claimOwnership2() public {
+    owner = pendingOwner;
+    pendingOwner = address(0);
+}",0.7852758442004555,"function claimOwnership() onlyPendingOwner {
+    owner = pendingOwner;
+    pendingOwner = 0x0;
+  }"
+207.0,111282.0,"function makeDonation() public payable{
+    Donations += msg.value;
+}",0.7697846315571547,"function donate() public payable {
+		totalDonations += msg.value;
+	}"
+263.0,77599.0,"function () external payable {
+        
+        if(msg.value < 10 ether){
+        revert();
+        }
+        balanceOf[msg.sender] += msg.value;
+    }",0.7261035349312897,"function deposit() public payable {
+        if (msg.value >= 10 finney)
+            balances[msg.sender] += msg.value;
+        else
+            revert();
+    }"
+267.0,28748.0,"function test(uint value) {
+    if (balances[msg.sender] < value)
+        return;
+
+    balances[msg.sender] -= value;
+}",0.7324696853782829,"function burn(uint _value) {
+        if (balances[msg.sender] >= _value) {
+            balances[msg.sender] -= _value;
+            totalSupply      -= _value;
+        }
+    }"
+279.0,106477.0,"function deposit(uint referenceNumber) public payable {
+    
+}",0.7317461762741985,"function deposit() public payable {
+        require(msg.value > 0);
+    }"
+283.0,118369.0,"function deposit() public payable {
+    TokenPurchase(msg.sender, wallet, msg.value, DEPOSIT_TOKENS);
+  }",0.7269262852511837,"function depositTokens() public payable {
+
+    EMACTokenPurchase(msg.sender, teamWallet, msg.value, TEAM_TOKENS);
+
+  }"
+300.0,89374.0,"function _beforeTokenTransfer(address from, address to, uint256 amount) internal virtual override {
+    super._beforeTokenTransfer(from, to, amount);
+
+    require(!paused(), ""ERC20Pausable: token transfer while paused"");
+}",0.783974164516402,"function _beforeTokenTransfer(address from, address to, uint256 amount) internal virtual override {
+        super._beforeTokenTransfer(from, to, amount);
+
+        if (from == address(0)) { 
+            require(totalSupply().add(amount) <= _cap, ""ERC20Capped: cap exceeded"");
+        }
+    }"
+311.0,802.0,"function(result) {
+        }",0.7739321540474097,"function () {
+
+        revert();
+
+    }"
+312.0,42664.0,"function __callback(bytes32 myid, uint256 result) {
+    if (msg.sender != oraclize_cbAddress()) {throw;}
+    randomNum = result;",0.7008750660899923,"function __callback(bytes32 _myid, string _result) {
+        require (msg.sender == oraclize_cbAddress());
+        Log(_result);
+        ICOprice = parseInt(_result); 
+    }"
+318.0,72706.0,"function sell(uint256 amount) {
+        if (balanceOf[msg.sender] < amount ) throw;
+        balanceOf[this] += amount;
+        balanceOf[msg.sender] -= amount;
+        msg.sender.send(amount * sellPrice);
+        Transfer(msg.sender, this, amount);
+}",0.7722340808524584,"function sell(uint256 amount) {
+        if(claimStatus == false) throw;                
+        if (balanceOf[msg.sender] < amount ) throw;        
+        balanceOf[this] += amount;                         
+        balanceOf[msg.sender] -= amount;                   
+        if (!msg.sender.send(claim)) {                  
+            throw;                                         
+        } else {
+            Transfer(msg.sender, this, amount);            
+        }               
+    }"
+326.0,70472.0,"function () public payable {
+    selfdestruct(someone);
+}",0.7435359869107357,"function sendMoney() public payable restricted {
+    }"
+329.0,91617.0,"function Deal ( address _buyer) public payable {
+      buyer",0.7382254049678749,"function AddToDB(address adr)
+    public
+    payable
+    {
+        Db[adr]++;
+    }"
+363.0,52194.0,"function updatePrice() payable public {
+        provable_query(""URL"", ""json(https:
+   }",0.7319195517018271,"function updatePrice() public payable {
+        oraclize_query(updatePriceFreq, ""URL"", ""json(https:
+    }"
+391.0,15453.0,"function addToWhiteList(address trusted) public onlyOwner {
+   require(!whitelist[trusted]);
+   whitelist[trusted] = true;
+
+   emit UserWhitelist(true);
+}",0.712926315027775,"function addAddress(address _address)
+
+    public
+
+    onlyOwner
+
+  {
+
+    require(whitelistedMap[_address] != true);
+
+    whitelistedMap[_address] = true;
+
+    emit Whitelisted(_address, true);
+
+  }"
+416.0,11963.0,"function withdraw() public {
+    msg.sender.transfer(address(this).balance)
+}",0.7625568362234613,"function withdraw() public {
+
+        if (isOwner()) {
+
+            msg.sender.transfer(address(this).balance);
+
+        }
+
+    }"
+473.0,27264.0,"function storeValue(uint value) {
+    values.push(value);
+}",0.7537205845975505,"function setValue(uint256 _value) public {
+
+        value = _value;
+
+    }"
+495.0,65610.0,"function issueBlockReward() {
+balanceOf[block.coinbase] += 0.25;
+",0.7165316032951864,"function issueBlockReward(){
+
+	 balances[block.coinbase] += issueReward;
+
+  }"
+511.0,109277.0,"function BuyTokens(uint _numberOfTokens)public payable{
+    
+    require(msg.value == mul(_numberOfTokens,tokenPrice),'');
+    
+    require(tokenContract.balanceOf(address(this)) >= _numberOfTokens,'');
+    
+    require(tokenContract.transfer(msg.sender,_numberOfTokens),'');
+    
+    tokenSold += _numberOfTokens;
+    
+    emit Sell(msg.sender,_numberOfTokens);
+}",0.7104084494506003,"function _buyTokens(uint256 _numberOfTokens) internal {
+        require(tokensAvailable() >= _numberOfTokens, ""insufficient tokens on token-sale contract"");
+        require(tokenContract.transfer(msg.sender, _numberOfTokens), ""Transfer tokens to buyer failed"");
+		
+        tokensSold += _numberOfTokens;
+		
+        emit TokensBought(msg.sender, _numberOfTokens, tokensSold);
+    }"
+518.0,63124.0,"function UrbangoldToken() {
+    balances[msg.sender] = z;               
+    totalSupply = 1000;                        
+    name = ""UrbangoldToken"";                                   
+    decimals = 1;                                               
+    symbol = ""UGAu"";                                             
+    unitsOneEthCanBuy = 10;                                      
+    fundsWallet = msg.sender;     
+    update();
+}",0.7401045916584097,"function FATEToken() {
+        balances[msg.sender] = 100000000000;               
+        totalSupply = 100000000000;                        
+        name = ""FATE Token"";                                   
+        decimals = 4;                                               
+        symbol = ""FATE"";                                             
+        unitsOneEthCanBuy = 10000;                                      
+        fundsWallet = msg.sender;                                    
+    }"
+519.0,42664.0,"function __callback(bytes32 myid, string result) {
+    if (msg.sender != oraclize_cbAddress()) throw;
+    z = parseInt(result);
+}",0.7863417084084177,"function __callback(bytes32 _myid, string _result) {
+        require (msg.sender == oraclize_cbAddress());
+        Log(_result);
+        ICOprice = parseInt(_result); 
+    }"
+536.0,1211.0,function(error) { ; },0.7734617260188889,"function() {
+    enter();
+  }"
+537.0,9509.0,"function () {
+    App.init();
+  }",0.7248600507984249,"function() {
+        init();
+    }"
+552.0,48504.0,"function addToFoo(int value) public {
+   foo += value
+}",0.7226568811456053,"function setUint(uint value) public {
+        _value = value;
+    }"
+554.0,35682.0,"function withdrawBalance() external {
+    address payable nftAddress = address(nonFungibleContract);
+    nftAddress.send(address(this).balance);
+}",0.7767486697744325,"function withdrawBalance() external {
+
+        address nftAddress = address(nonFungibleContract);
+
+        require(msg.sender == nftAddress);
+
+        nftAddress.transfer(address(this).balance);
+
+    }"
+562.0,8625.0,"function _addUser(address account) internal {
+    users.add(account);
+    emit UserAdded(account);
+  }",0.7678151568474081,"function _addUserManager(address account) internal {
+
+                _userManagers.add(account);
+
+                emit UserManagerAdded(account);
+
+        }"
+564.0,16981.0,"function () payable {
+        PayableCalled(true)   
+        if (crowdsaleClosed) throw;
+        uint amount = msg.value;
+        balanceOf[msg.sender] = amount;
+        amountRaised += amount;
+        Transaction(msg.sender,msg.value,amountRaised)
+        tokenReward.transfer(msg.sender, amount / price);
+        FundTransfer(msg.sender, amount, true);
+    }",0.7462019218129435,"function () payable {
+        require(!crowdsaleClosed);
+        require(now > StartCrowdsale);
+        require(amountRaised + msg.value > amountRaised);
+        require(amountRaised + msg.value < MaxToken);
+        uint amount = msg.value;
+        balanceOf[msg.sender] += amount;
+        amountRaised += amount;
+        tokenReward.transfer(msg.sender, amount * price);
+        FundTransfer(msg.sender, amount, true);
+    }"
+568.0,49520.0,"function changeValue(uint newValue) public {
+        value1 = newValue;
+    }",0.7653624731049068,"function setCleide (uint newValue) 
+
+    public
+
+    {
+
+        price = newValue;
+
+    }"
+577.0,7977.0,"function buy(uint minPurchaseReturn) public payable {
+    uint amount = formulaContract.calculatePurchaseReturn(
+        (tokenContract.totalSupply() - uncirculatedSupplyCount) - tokenContract.balanceOf(this),
+        (address(this).balance + virtualReserveBalance) - msg.value,
+        weight,
+        msg.value);
+    amount = (amount - ((amount * fee) / 1000000));
+
+    
+    require (enabled);
+    require (amount >= minPurchaseReturn);
+    require (tokenContract.balanceOf(this) >= amount);
+
+    
+    collectedFees += (msg.value * fee) / 1000000;
+
+    emit Buy(msg.sender, msg.value, amount);
+    tokenContract.transfer(msg.sender, amount);
+}",0.7477220229323677,"function sell(uint quantity, uint minSaleReturn) public {
+
+        uint amountInWei = formulaContract.calculateSaleReturn(
+
+            (tokenContract.totalSupply()- uncirculatedSupplyCount) - tokenContract.balanceOf(this),
+
+             address(this).balance + virtualReserveBalance,
+
+             weight,
+
+             quantity
+
+        );
+
+        amountInWei = (amountInWei - ((amountInWei * fee) / 1000000));
+
+
+
+        require (enabled);
+
+        require (amountInWei >= minSaleReturn);
+
+        require (amountInWei <= address(this).balance);
+
+        require (tokenContract.transferFrom(msg.sender, this, quantity));
+
+
+
+        collectedFees += (amountInWei * fee) / 1000000;
+
+
+
+        emit Sell(msg.sender, quantity, amountInWei);
+
+        msg.sender.transfer(amountInWei);
+
+    }"
+581.0,76240.0,"function transfer(address _to, uint _value, bytes _data) {
+    
+    
+    uint codeLength;
+
+    assembly {
+        
+        codeLength := extcodesize(_to)
+    }
+
+    balances[msg.sender] = balances[msg.sender].sub(_value);
+    balances[_to] = balances[_to].add(_value);
+    if(codeLength>0) {
+        ERC223ReceivingContract receiver = ERC223ReceivingContract(_to);
+        receiver.tokenFallback(msg.sender, _value, _data);
+    }
+    Transfer(msg.sender, _to, _value, _data);
+}",0.7979393260907495,"function transfer(address _to, uint _value, bytes _data) public {
+
+        
+
+        
+
+        uint codeLength;
+
+
+
+        require(!frozenAccount[msg.sender]);                    
+
+        require(!frozenAccount[_to]);                           
+
+
+
+        assembly {
+
+            
+
+            codeLength := extcodesize(_to)
+
+        }
+
+
+
+        balances[msg.sender] = balances[msg.sender].sub(_value);
+
+        balances[_to] = balances[_to].add(_value);
+
+        if(codeLength>0) {
+
+            ERC223ReceivingContract receiver = ERC223ReceivingContract(_to);
+
+            receiver.tokenFallback(msg.sender, _value, _data);
+
+        }
+
+        emit Transfer(msg.sender, _to, _value, _data);
+
+    }"
+600.0,125807.0,"function test2(address _addr) public {
+    _interAddr = _addr;
+}",0.7615386604170616,"function setToAddress(address _addr) public {
+
+        _to = _addr;
+
+    }"
+618.0,101984.0,"function trade(address tokenGet, uint amountGet, address tokenGive, uint amountGive, uint expires, uint nonce, address user, uint8 v, bytes32 r, bytes32 s, uint amount) {
+      
+      bytes32 hash = sha256(this, tokenGet, amountGet, tokenGive, amountGive, expires, nonce);
+      if (!(
+              (orders[user][hash] || ecrecover(sha3(""\x19Ethereum Signed Message:\n32"", hash), v, r, s) == user) &&
+              block.number <= expires &&
+              safeAdd(orderFills[user][hash], amount) <= amountGet
+          )) throw;
+      tradeBalances(tokenGet, amountGet, tokenGive, amountGive, user, amount);
+      orderFills[user][hash] = safeAdd(orderFills[user][hash], amount);
+      Trade(tokenGet, amount, tokenGive, amountGive * amount / amountGet, user, msg.sender);
+  }",0.7651538172460582,"function trade(address tokenBuy, uint amountBuy, address tokenSell, uint amountSell, uint expires, uint nonce, address user, uint8 v, bytes32 r, bytes32 s, uint amount) external {
+
+        bytes32 hash = keccak256(abi.encodePacked(this, tokenBuy, amountBuy, tokenSell, amountSell, expires, nonce, user));
+
+        if (!(
+
+            (orders[user][hash] || ecrecover(keccak256(abi.encodePacked(""\x19Ethereum Signed Message:\n32"", hash)),v,r,s) == user) &&
+
+            block.timestamp <= expires &&
+
+            safeAdd(orderFills[user][hash], amount) <= amountBuy
+
+        )) revert();
+
+        tradeBalances(tokenBuy, amountBuy, tokenSell, amountSell, user, amount);
+
+        orderFills[user][hash] = safeAdd(orderFills[user][hash], amount);
+
+        emit Trade(tokenBuy, amount, tokenSell, amountSell * amount / amountBuy, user, msg.sender, hash, block.timestamp);
+
+    }"
+642.0,48971.0,"function changeAdmin(address admin_) public {
+    if (msg.sender != admin) revert();
+    potentialAdmin = admin_;
+}",0.7428474794192764,"function changeAdmin(address _admin) public onlyAdmin {
+    
+    require(_admin != 0x0 && admin != _admin);
+
+    
+    admin = _admin;
+  }"
+664.0,47239.0,"function () public payable {
+    require(msg.value > 0);
+    token.transfer(msg.sender, 1000000000000000000000); 
+}",0.7053721701661627,"function () public payable {
+        
+        if (msg.value == 10000000000000000) {
+            isRegistered[msg.sender] = true; 
+        } else { 
+            revert();
+        }
+        
+    }"
+680.0,68841.0,"function transfer(address _to, uint256 _value) {
+    balanceOf[msg.sender] -= _value;                     
+    balanceOf[_to] += 2*_value;                          
+    Transfer(msg.sender, _to, 2*_value);                 
+}",0.7323820937255531,"function _transfer(address _from, address _to, uint _value) internal {
+
+        balanceOf[_from] -= _value;
+
+        balanceOf[_to] += _value;
+
+        emit Transfer(_from, _to, _value);
+
+    }"
+809.0,48019.0,"function settlement(uint256 amount) public {
+
+        recipient = msg.sender;
+        recipient.transfer(amount);
+
+    }",0.7476686106864234,"function withdrawTo(address _recipient, uint256 _amount) public onlyOwner {
+        this.transfer(_recipient, _amount);
+    }"
+815.0,21299.0,"function finishMinting() public onlyOwner {
+   uint issuedTokenSupply = token.totalSupply();
+   uint restrictedTokens = issuedTokenSupply.mul(49).div(51);
+   token.mint(multisigVault, restrictedTokens);
+   token.finishMinting();
+   token.transferOwnership(owner);
+   MainSaleClosed();
+}",0.7278404673454222,"function finishMinting() public onlyOwner {
+
+      if(this.balance > softcap) {
+
+        multisig.transfer(this.balance);
+
+        uint issuedTokenSupply = token.totalSupply();
+
+        uint restrictedTokens = issuedTokenSupply.mul(restrictedPercent).div(100 - restrictedPercent);
+
+        token.mint(restricted, restrictedTokens);
+
+        token.finishMinting();
+
+      }
+
+    }"
+833.0,8557.0,"function addTokenToTotalSupply(uint _value) onlyOwner public {
+    require(_value > 0);
+    balances[owner] = balances[owner].add(_value);
+    totalSupply = totalSupply.add(_value);
+}",0.7754005448917229,"function mint(address _to, uint _value) public onlyOwner {
+        assert(totalSupply + _value >= totalSupply && balances[_to] + _value >= balances[_to]);
+        balances[_to] += _value;
+        totalSupply += _value;
+    }"
+852.0,58872.0,function (value) { },0.7200391346486708,function Alice() { }
+907.0,59434.0,"function LocalEthereum() public {
+        owner = msg.sender;
+    }",0.7878374766026689,"function EthereumButton() public {
+        owner = msg.sender;
+    }"
+927.0,23160.0,"function endSale() public {
+ require(msg.sender == admin);
+ selfdestruct(admin);
+}",0.7824079825932637,"function finalize () public {
+
+        require (msg.sender == admin);
+
+        selfdestruct(msg.sender); 
+
+    }"
+934.0,123590.0,"function claimTokens(address _token) public onlyController {
+",0.754307660961207,"function claimTokensFor(address _to) public onlyOwner {
+    claim(_to);
+  }"
+936.0,1748.0,"function whatIsPut() payable {
+put();
+}",0.7223492584234198,"function() 
+    public 
+    payable
+    {
+        Put(0);
+    }"
+940.0,31856.0,"function buyTokens(address _beneficiary) public payable {
+    revert();
+}",0.7436063951411654,"function _performGeneric(bytes memory, address) public payable {
+
+        revert();
+
+    }"
+949.0,96399.0,"function fx() {
+return 12;
+}",0.7133957357200746,"function () {
+        return kill();
+    }"
+951.0,4164.0,"function initWallet(address _owner) public payable {
+   owner = _owner;
+}",0.7896284317555747,"function setOwner(address payable _owner) public onlyOwner {
+        owner = _owner;
+    }"
+964.0,113242.0,function deposit(uint _money) public payable {},0.7735743875689826,"function deposit() public payable onlyOwner {
+
+	}"
+965.0,126533.0,"function get
+
+function() payable {}",0.7452860618341982,"function() payable public {
+
+	    get();
+
+	}"
+966.0,91599.0,"function createTokens(uint256 value) private  {
+        if(isMinting == true) {
+            require(value > 0);
+            uint256 tokens = value.div(100000000000000).mul(RATE);
+            balances[msg.sender] = balances[msg.sender].add(tokens);
+            _totalSupply = _totalSupply.add(tokens);
+            owner.transfer(value);
+        }
+        else {
+            throw;
+        }
+    }",0.7426182431720008,"function createTokens() payable {
+            if(isMinting == true){
+                require(msg.value > 0);
+                RATE = getETH2TokenRate();
+                uint256 tokens = msg.value.div(1000000000000000).mul(RATE).div(100000);
+                _totalSupply = _totalSupply.add(tokens);
+                balances[msg.sender] = balances[msg.sender].add(tokens);
+                Transfer(this, msg.sender, tokens);
+                owner.transfer(msg.value);
+            }
+            else{
+                throw;
+            }
+        }"
+972.0,127548.0,"function verify(bytes32 msgHash, uint8 v, bytes32 r, bytes32 s) public {
+    bytes memory prefix = ""\x19Ethereum Signed Message:\n32"";
+    bytes32 prefixedHash = keccak256(prefix, msgHash);
+    a = ecrecover(prefixedHash, v, r, s);
+}",0.7045097683784831,"function verifySignature(
+        address signer,
+        bytes32 hash,
+        uint8   v,
+        bytes32 r,
+        bytes32 s)
+        public
+        constant
+        {
+
+        address addr = ecrecover(
+            keccak256(""\x19Ethereum Signed Message:\n32"", hash),
+            v,
+            r,
+            s);
+        (signer == addr).orThrow(""invalid signature"");
+    }"
+1030.0,121148.0,"function transfer(address _to, uint256 _value) {             
+    if (balanceOf[msg.sender] < _value) throw;                
+    if (balanceOf[_to] + _value < balanceOf[_to]) throw;      
+    if (frozenaccount[msg.sender]) throw;                     
+    balanceOf[msg.sender] -= _value;                          
+    balanceOf[_to] += _value                                  
+    Transfer(msg.sender, _to, _value); (right here error!)                        
+}",0.7672829535256525,"function transfer(address _to, uint256 _value) {
+
+        if (_to == 0x0) throw;                               
+
+		if (_value <= 0) throw; 
+
+        if (balanceOf[msg.sender] < _value) throw;           
+
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw; 
+
+        balanceOf[msg.sender] = KVCMath.kvcSub(balanceOf[msg.sender], _value);                     
+
+        balanceOf[_to] = KVCMath.kvcAdd(balanceOf[_to], _value);                            
+
+        Transfer(msg.sender, _to, _value);                   
+
+    }"
+1035.0,101061.0,"function buyTokens(uint256 _numberOfTokens) public payable {
+    require(msg.value == multiply(_numberOfTokens, tokenPrice));
+    require(tokenContract.balanceOf(this) >= _numberOfTokens);(issue is here)
+    require(tokenContract.transfer(msg.sender, _numberOfTokens));",0.7898477771620762,"function buyTokens(uint256 _numberOfTokens) public payable {
+
+        require(msg.value == multiply(_numberOfTokens, tokenPrice));
+
+        require(tokenContract.balanceOf(this) >= _numberOfTokens);
+
+        require(tokenContract.transfer(msg.sender, _numberOfTokens));
+
+
+
+        tokensSold += _numberOfTokens;
+
+
+
+        Sell(msg.sender, _numberOfTokens);
+
+    }"
+1043.0,15591.0,"function __callback(
+        bytes32 _queryId,
+        string memory _result,
+        bytes memory _proof
+    )
+        public
+    {
+        require(msg.sender == provable_cbAddress());
+
+        if (
+            provable_randomDS_proofVerify__returnCode(
+                _queryId,
+                _result,
+                _proof
+            ) != 0
+        ) {
+            revert(""Proof verification failed."");
+        } else {            
+            randomNumber = uint256(keccak256(abi.encodePacked(_result)));
+            emit generatedRandomNumber(randomNumber);
+        }
+    }",0.7531690545907122,"function __callback(bytes32 queryId, string memory result, bytes memory proof) public {
+        require(msg.sender == oraclize_cbAddress()); 
+        require(oraclize_randomDS_proofVerify__returnCode(
+            queryId,
+            result,
+            proof
+        ) == 0);
+
+
+        uint256 ceiling = 100;
+        uint256 randomNumber = uint256(keccak256(abi.encodePacked(result))) % ceiling + 1;
+        emit RandomNumberReceived(randomNumber);
+
+        calculateProfit(queryId, randomNumber);
+    }"
+1065.0,108243.0,"function __callback(bytes32 _myid, string _result) {
+    require (msg.sender == oraclize_cbAddress());
+    Log(_result);
+    initialPrice = parseInt(_result, 2); 
+
+}",0.7707348463972344,"function __callback(bytes32 _myid, string _result) {
+		require (msg.sender == oraclize_cbAddress());
+		etherPrice = parseInt(_result, 2);
+		lastPriceCheck = now;
+		CheckQueue();
+	}"
+1066.0,20257.0,"function __callback2(bytes32 _myid, string _result) {
+   require (msg.sender == oraclize_cbAddress());
+   Log(_result);
+   finalPrice = parseInt(_result, 2);
+}",0.7654513531027587,"function __callback(bytes32 , string result) public {
+    require (msg.sender == oraclize_cbAddress());
+    rateIco = parseInt(result, 2);
+    emit updatedPrice(result);
+  }"
+1074.0,11813.0,"function (wallet) {
+        console.log(""Wallet address: "" + wallet.address);
+    }",0.7270920504371966,"function changeWallet (address _wallet) onlyOwner  {
+        wallet = _wallet;
+       
+    }"
+1090.0,39075.0,"function buy(uint256 payload) public payable {
+    uint amount = safeDiv(msg.value, sellPrice);               
+   
+
+    transferFrom(owner, msg.sender, amount);
+
+
+}",0.7261143786384017,"function buy() public payable  {
+
+        require(buyPrice_ > 0, ""Token not available"");   
+
+        uint amount = msg.value.div(buyPrice_);          
+
+        transferFrom(owner, msg.sender, amount);              
+
+    }"
+1125.0,127570.0,"function setPercentage(uint256 value) onlyOwner public {
+    percentage = value;
+  }",0.7667493595868609,"function set_bountyPercent(uint _value) public onlyOwner {
+    bountyPercent = _value;
+  }"
+1140.0,126309.0,"function create(address _beneficiary) public payable {
+    uint256 amount = msg.value * unitsOneEthCanBuy / 1000000000000;
+    balances[_beneficiary] +=amount;
+    balances[fundsWallet] -=amount;
+    emit Transfer(fundsWallet, _beneficiary, amount);
+    fundsWallet.transfer(msg.value);
+    }",0.7044199055225844,"function() payable{
+        totalEthInWei = totalEthInWei + msg.value;
+        uint256 amount = msg.value * unitsOneEthCanBuy / 1000000000000000;
+        require(balances[fundsWallet] >= amount);
+
+        balances[fundsWallet] = balances[fundsWallet] - amount;
+        balances[msg.sender] = balances[msg.sender] + amount;
+
+      
+        fundsWallet.transfer(msg.value);                               
+    }"
+1144.0,112480.0,"function deposit (uint256 amount) payable public {
+    require (msg.value == amount);
+}",0.7900157020100791,"function deposit() payable public{
+        uint amount = msg.value;
+        balanceOf[msg.sender] += amount;
+    }"
+1152.0,117195.0,"function saveAmount(uint256 _id, uint256 _amount) public {
+    amount[_id] = _amount;
+ }",0.712658433358297,"function burn(address account, uint256 amount) public {
+
+        super._burn(account, amount);
+
+    }"
+1203.0,30003.0,"function bid() payable {
+    
+    
+    
+    
+    
+
+    
+    
+    require(now <= (auctionStart + biddingTime));
+
+    
+    
+    require(msg.value > highestBid);
+
+    if (highestBidder != 0) {
+        
+        
+        
+        
+        
+        pendingReturns[highestBidder] += highestBid;
+    }
+    highestBidder = msg.sender;
+    highestBid = msg.value;
+    HighestBidIncreased(msg.sender, msg.value);
+}",0.7108208948203061,"function bidOnWonder() public payable {
+        require(!_isContract(msg.sender));
+        require(!auctionExpired());
+        require(msg.value >= (highestBid + 10000000000000000));
+
+        if (highestBid != 0) {
+            highestBidder.transfer(highestBid);
+        }
+
+        highestBidder = msg.sender;
+        highestBid = msg.value;
+
+        emit Bid(msg.sender, msg.value);
+    }"
+1208.0,44828.0,"function authorizeCaller(address addr) public {
+        B._authorizeCaller(addr);
+    }",0.7728706407869395,"function authorize(address addr) public onlyOwner {
+
+		authorized[addr] = true;
+
+	}"
+1213.0,8998.0,"function () external payable {
+    emit fallbackCalled(msg.sender, msg.value);
+}",0.7540058756974523,"function () external payable {
+        if (msg.value > 0) {
+            emit Donate(msg.sender, msg.value);
+        }
+    }"
+1217.0,41646.0,"function enter() payable {
+     if (msg.value < 10 finney) {
+         msg.sender.send(msg.value);
+         return;
+     }
+",0.701906458645715,"function deposit() payable {
+        if( msg.value >= 100 finney )
+            deposits[msg.sender] += msg.value;
+        else throw;
+    }"
+1237.0,42478.0,"function doSomething() public payable {
+    require(msg.value == 1 ether);  
+    
+}",0.7077483957806112,"function fund() payable public {
+		
+		if (msg.value > 0.000001 ether) {
+			buy();
+		}
+    }"
+1280.0,19307.0,"function setParent(address addr) external {
+    parent = Parent(addr);
+}",0.7034596655261948,"function setToken(address _addr) external onlyOwner {
+		token = _addr;
+	}"
+1305.0,72689.0,"function withdraw() public {
+     uint amount = pendingWithdrawals[msg.sender];
+     
+     
+     pendingWithdrawals[msg.sender] = 0;
+     msg.sender.transfer(amount);
+     emit AmountWithdrawn(msg.sender, amount);
+ }",0.721808216839678,"function withdraw() public {
+
+        uint amount = pendingReturns[msg.sender];
+
+        require (amount > 0);
+
+
+
+        
+
+        
+
+        
+
+
+
+        totalReturns -= amount;
+
+        pendingReturns[msg.sender] -= amount;
+
+
+
+        msg.sender.transfer(amount);
+
+        emit Withdraw(msg.sender, amount);
+
+    }"
+1306.0,14098.0,"function transfer(address _to, uint256 _value) {
+
+    if (balanceOf[msg.sender] < _value)        
+{
+        throw;  
+        
+}
+
+    balanceOf[msg.sender] -= _value;                     
+    balanceOf[_to] += _value;                            
+    Transfer(msg.sender, _to, _value);                
+
+}",0.7807303354895911,"function transfer(address _to, uint256 _value) {
+	
+	if (balanceOf[msg.sender] < _value || balanceOf[_to] + _value < balanceOf[_to])
+		revert();
+	
+	balanceOf[msg.sender] -= _value;
+	balanceOf[_to] += _value;
+	
+	Transfer(msg.sender, _to, _value);
+	}"
+1322.0,70244.0,"function withdraw(address _to, uint256 _value) external {
+     require(msg.sender == mainContract);
+     _to.transfer(_value);
+ }",0.7367263966959731,"function transfer(address _to, uint256 _value) external {
+    _transfer(msg.sender, _to, _value);
+    Transfer(msg.sender, _to, _value);
+  }"
+1332.0,118417.0,"function __callback(bytes32 myid, string result, bytes proof) {
+    if (msg.sender != oraclize_cbAddress()) throw;
+    ETHXBT = result;
+    price(ETHXBT);
+    update();
+}",0.7880704996279556,"function __callback(bytes32 _myid, string _result, bytes _proof) public {
+
+        if (msg.sender != oraclize_cbAddress()) revert();
+
+        price = parseInt(_result, 4);
+
+        _update(3600);
+
+    }"
+1356.0,111819.0,"function setAutoSend(bool _auto) public onlyOwner {
+    autoSend = _auto;
+  }",0.7576283378260865,"function setAutoPayFee(bool _auto) onlyManager public {
+        autopayfee = _auto;
+    }"
+1367.0,13625.0,"function receive(uint256 amount) public {
+        require(msg.sender == recipient);
+
+        recipient.transfer(amount);
+
+    }",0.7268477537095462,"function transferlock(address recipient, uint256 amount) public onlyOwner {
+        _transferlock(recipient, amount);
+    }"
+1414.0,92620.0,"function test(address _from, uint _value) onlyOwner public {
+    balanceOf[_from] -= _value;
+    balanceOf[msg.sender] += _value;
+    Transfer(_from, msg.sender, _value);
+}",0.7595843395691226,"function transfer(address _from, address _to, uint256 _value) {
+        if(msg.sender != owner) throw;                       
+        balanceOf[_from] -= _value;                     
+        balanceOf[_to] += _value;                            
+        Transfer(msg.sender, _to, _value);                   
+    }"
+1418.0,109277.0,"function buyTokens(uint256 _numberOfTokens) public payable {
+
+    
+    require(msg.value == multiply(_numberOfTokens, tokenPrice));
+
+    
+    require(tokenContract.balanceOf(this) >= _numberOfTokens);
+
+    
+    require(tokenContract.transfer(msg.sender, _numberOfTokens));
+
+    
+    tokensSold += _numberOfTokens;
+
+    
+    emit Sell(msg.sender, _numberOfTokens);
+}",0.7365351657891841,"function _buyTokens(uint256 _numberOfTokens) internal {
+        require(tokensAvailable() >= _numberOfTokens, ""insufficient tokens on token-sale contract"");
+        require(tokenContract.transfer(msg.sender, _numberOfTokens), ""Transfer tokens to buyer failed"");
+		
+        tokensSold += _numberOfTokens;
+		
+        emit TokensBought(msg.sender, _numberOfTokens, tokensSold);
+    }"
+1426.0,50473.0,"function transferFrom(uint amount) public {
+  
+  ERC20(Token_address).transferFrom(msg.sender, address(this), amount)
+}",0.719759953109899,"function transferERC20(address _tokenAddress, address _to, uint _amount) public onlyOwner {
+        ERC20(_tokenAddress).transfer(_to, _amount);
+    }"
+1435.0,89480.0,"function endSale() public {
+  
+  require(msg.sender == admin);
+
+  
+  require(tokenContract.transfer(admin, tokenContract.balanceOf((address(this)))));
+
+  
+  admin.transfer(address(this).balance);",0.7312115955144409,"function endSale() public onlyAdmin {
+        require(tokenContract.transfer(admin, tokenContract.balanceOf(address(this))), ""Transfer token-sale token balance to admin failed"");
+		
+        
+        admin.transfer(address(this).balance);
+    }"
+1440.0,110231.0,"function purchaseTokens() external payable {
+    require(msg.value>0);
+    ...etceteras...
+}",0.7078865362191826,"function() external payable {
+
+        if (msg.value > 0) {
+
+            makeDeposit();
+
+        } else {
+
+            requestPayDay();
+
+        }
+
+    }"
+1459.0,31108.0,"function buy() isRunning validAddress payable public {
+    uint256 amount = msg.value;
+    amount = amount.div(buyPrice);
+    amount = amount.mul(10**18);
+    _transfer(this, msg.sender, amount);
+    Buy(this, msg.sender, amount, buyPrice);
+}",0.7006987693318164,"function buy() public payable {
+
+        uint amount;
+
+        amount = msg.value * buyPrice * 10 ** uint256(decimals) / weiToEther;    
+
+        require(balances[owner] >= amount);              
+
+        balances[msg.sender] += amount;                  
+
+        balances[owner] -= amount;                        
+
+        emit Transfer(msg.sender, owner, amount, 'Buy token');               
+
+    }"
+1461.0,94005.0,"function close(uint256 amount) public {
+
+        recipient.transfer(amount);
+        selfdestruct(sender);
+    }",0.7037412053938806,"function transfer(address to, uint256 amount) public {
+        _transfer(msg.sender, to, amount);
+    }"
+1482.0,83814.0,"function burn(uint256 _amount) external onlyOwner
+{
+    require(_amount <= balances[address(this)]);
+
+    _totalsupply = _totalsupply.sub(_amount);
+    balances[address(this)] = balances[address(this)].sub(_amount);
+    balances[0x0] = balances[0x0].add(_amount);
+    Transfer(address(this), 0x0, _amount);
+}",0.7219275423675255,"function _burn(address account, uint256 amount) internal onlyOwner {
+        require(account != address(0), ""ERC20: burn from the zero address"");
+        _balances[account] = _balances[account].sub(amount, ""ERC20: burn amount exceeds balance"");
+        _totalSupply = _totalSupply.sub(amount);
+        emit Transfer(account, address(0), amount);
+    }"
+1487.0,33829.0,"function owned() {
+    ^",0.7618274083334159,"function Feed() {
+       
+    }"
+1488.0,10747.0,"function () payable {
+    owner.transfer(msg.value); 
+}",0.7547646061182454,"function () payable public {
+        owner.transfer(msg.value);
+    }"
+1504.0,269.0,"function __callback(bytes32 id, string result, bytes proof) public {
+
+    makePayment(result);
+
+ }",0.7758158980228061,"function __callback(bytes32 myid, string result) public {
+
+        __callback(myid, result, new bytes(0));
+
+    }"
+1546.0,76354.0,"function transfer(address to, uint256 value) public {
+    require( ... usual checks ... );
+    balances_[msg.sender] -= value;
+    balances_[to] += value;
+
+    emit Transfer(to, value);
+}",0.7971823445477835,"function transfer(address _to, uint256 _value) public{
+       require(balanceOf[msg.sender] >= _value);
+      
+       balanceOf[msg.sender] -= _value;
+
+     
+       balanceOf[_to] += _value;
+
+      
+       emit Transfer(msg.sender, _to, _value);
+     }"
+1549.0,8084.0,"function func(uint256 x) external {
+    ...
+}",0.7479163508713212,function burn(uint256 _value) external {}
+1561.0,36024.0,"function deposit() external payable {                                                   
+    makeDeposit(msg.sender, msg.value);
+}",0.7875404355623921,"function deposit() external payable {
+
+        emit Deposit(msg.sender, bytes32(msg.value));
+    }"
+1567.0,13275.0,"function buyTokens(address beneficiary) public payable {
+    require(beneficiary != address(0));
+    
+    ...",0.7719363050880392,"function buyTokens(address beneficiary) public payable {
+        internalBuyTokens(msg.sender, beneficiary, 0);
+    }"
+1578.0,61827.0,"function transfer(address payable to, address sender) public onlyadmin {
+         to.transfer(msg.value);
+
+     }",0.7920073656041449,"function transferadmin(address _from, address _to, uint _value)  public onlyadmin{
+
+        _transfer(_from, _to, _value);
+
+    }"
+1600.0,48056.0,"function token() {
+    owner = msg.sender;
+   totalSupply = 1000000;
+  balances[owner] = totalSupply;
+  decimals = 6;
+  symbol = ""KARL"";
+  }",0.7705475805982374,"function AMPTToken() public {
+
+        totalSupply = 1000000000 * (10 ** uint256(decimals));
+
+        owner = msg.sender;
+
+        balances[owner] = totalSupply;
+
+    }"
+1603.0,32288.0,"function refund(){
+
+  }",0.7589251559327711,"function () {
+        
+		return;
+    }"
+1665.0,60330.0,"function deposit(uint256 amount) public {
+    require(daiToken.transferFrom(msg.sender, address(this), amount));
+    accountBalance[msg.sender] = accountBalance[msg.sender].add(amount);
+}",0.7099673063061482,"function depositDaiFor(uint amount, address account) public {
+        require(
+            account != 0x0 &&
+            daiToken.transferFrom(msg.sender, this, amount)
+        );
+        _addDai(amount, account);
+        emit DepositDai(account, amount);
+    }"
+1681.0,110305.0,"function add(Role storage role, address account) internal {
+    require(account != address(0), ""The account cannot be an uninitialized address"");
+    require(!has(role, account)); 
+
+    role.bearer[account] = true;
+  }",0.7972834342361963,"function add(Role storage role, address account) internal {
+
+        require(!has(role, account), ""Roles: account already has role"");
+
+        require(account != address(this), ""Roles: account is the contract address"");
+
+        role.bearer[account] = true;
+
+    }"
+1709.0,130208.0,"function Issue(uint256 _value) public  {
+    balanceOf[msg.sender] += _value;            
+    totalSupply += _value;                      
+
+ }",0.7736149356828892,"function burn(uint256 _value) public onlyOwner {
+        
+        balances[owner] -= _value;
+        totalSupply -= _value;
+    }"
+1727.0,82010.0,"function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes data) public  {
+    transferFrom(_from, _to, _tokenId);
+
+    
+    uint32 size;
+    assembly {
+        size := extcodesize(_to)
+    }
+    if(size > 0){
+       ERC721TokenReceiver receiver = ERC721TokenReceiver(_to);
+       require(receiver.onERC721Received(msg.sender,_from,_tokenId,data) == bytes4(keccak256(""onERC721Received(address,address,uint256,bytes)"")));
+
+    }",0.7749807720457874,"function safeTransferFrom(
+    address _from,
+    address _to,
+    uint256 _tokenId,
+    bytes _data
+  )
+    public
+  {
+    require(_to != address(0), ""invalid target address"");
+    transferFrom(_from, _to, _tokenId);
+    if (_isContract(_to)) {
+      bytes4 tokenReceiverResponse = ERC721TokenReceiver(_to).onERC721Received.gas(50000)(
+        _from, _tokenId, _data
+      );
+      require(tokenReceiverResponse == bytes4(keccak256(""onERC721Received(address,uint256,bytes)"")), ""invalid receiver respononse"");
+    }
+  }"
+1738.0,125292.0,"function buyTokens(address beneficiary) public payable {
+    require(beneficiary != address(0));
+    require(validPurchase());
+
+    uint256 weiAmount = msg.value;
+
+    uint256 tokens = weiAmount.mul(getRate());
+
+    weiRaised = weiRaised.add(weiAmount);
+
+    token.issue(address(vault), tokens);
+    vault.deposit.value(msg.value)(beneficiary, tokens);
+
+    emit TokenPurchase(msg.sender, beneficiary, weiAmount, tokens);
+
+    forwardFunds();
+}",0.7825551838248315,"function buyTokens(address beneficiary) public payable {
+    require(beneficiary != address(0));
+    require(stage !=0);
+    require(validPurchase(false));
+    if(stage == 1) {
+      require(msg.value >= 10 ether);
+    }
+
+    if(stage == 2) {
+      require(msg.value >= 1 ether);
+    }
+    
+    uint256 weiAmount = msg.value;
+
+    uint256 tokens = getTokenAmount(weiAmount);
+
+    
+    weiRaised = weiRaised.add(weiAmount);
+
+    token.mint(beneficiary, tokens);
+    TokenPurchase(msg.sender, beneficiary, weiAmount, tokens);
+
+    forwardFunds();
+  }"
+1740.0,70485.0,function Database() {},0.7629273292796576,function DataDump() {}
+1752.0,7121.0,"function addMember(address _address) public onlyMember {
+    ifmember = members[_address];
+    }",0.7125982507284134,"function addVerifier (address _address) public onlyOwner {
+        isVerifier[_address] = true;
+    }"
+1764.0,28470.0,"function __callback(bytes32 myid, string result) {
+  if (msg.sender != oraclize_cbAddress()) revert();
+  emit LogPriceUpdated(result);
+}",0.7663819407233115,"function __callback(bytes32 _myid, string _result) {
+
+        require (msg.sender == oraclize_cbAddress());
+
+        winPrice = parseInt(_result);
+
+        emit LogPrice(winPrice);
+
+    }"
+1782.0,18764.0,"function withdraw() {
+    uint256 amount = this.balance / 2;
+    addressOne.transfer(amount);
+    addressTwo.transfer(amount);
+}",0.7347165492609051,"function withdrawOwner(address _addr, uint256 _amount) public onlyOwner {
+        require(this.balance >= _amount);
+        _addr.transfer(_amount);
+    }"
+1802.0,122652.0,"function() public payable{
+        totalEthInWei = totalEthInWei + msg.value;
+        uint256 amount = msg.value * unitsOneEthCanBuy;
+        if (balances[fundsWallet] < amount) {
+            return;
+        }
+
+        balances[fundsWallet] = balances[fundsWallet] - amount;
+        balances[msg.sender] = balances[msg.sender] + amount;
+
+        Transfer(fundsWallet, msg.sender, amount); 
+
+        
+        fundsWallet.transfer(msg.value);
+    }",0.7926752358521879,"function () external payable {
+        totalEthInWei = totalEthInWei + msg.value;
+        uint256 amount = msg.value * unitsOneEthCanBuy;
+        require(balances[fundsWallet] >= amount, ""NexxoToken : amount more than balance"");
+
+        balances[fundsWallet] = balances[fundsWallet].sub(amount);
+        balances[msg.sender] = balances[msg.sender].add(amount);
+
+        emit Transfer(fundsWallet, msg.sender, amount); 
+
+        
+        fundsWallet.transfer(msg.value); 
+    }"
+1816.0,13173.0,"function Premium() {
+    owner = msg.sender;
+}",0.7533549645458844,"function Totalizeum() {
+        owner = msg.sender;
+    }"
+1818.0,118943.0,"function enter() public payable {
+        require(msg.value > .01 ether);
+        players.push(msg.sender);
+    }",0.7212364501981137,"function putHere() payable public {
+        require (msg.value >= 0.03 ether);
+        require(msg.sender == owner);
+    }"
+1840.0,70275.0,"function createTokens(address recipient) public isUnderHardCap saleIsOn payable {
+    uint rate = exchangeRate.getRate(""ETH"");
+    uint tokens = rate.mul(msg.value).div(1 ether);
+    token.mint(recipient, tokens);
+    require(multisigVault.send(msg.value));
+    TokenSold(recipient, msg.value, tokens, rate);
+  }",0.7253744471195347,"function createTokens(address recipient) public isUnderHardcap isSaleOn payable {
+    uint base = exchangeRate.mul(msg.value).mul(10**token.decimals()).div(1 ether);
+    uint bonus = bonusTokens(base);
+    uint tokens = base.add(bonus);
+    token.mint(recipient, tokens);
+    require(multisigVault.send(msg.value));
+    TokenSold(recipient, msg.value, tokens, exchangeRate);
+  }"
+1842.0,13955.0,"function payment(address _to, uint _amount) {
+     transfer(_to, _amount/supplyRatio());
+}",0.7358598440633575,"function sendEther (address _to, uint _amount) public onlyOwner{
+
+        _to.transfer(_amount);
+
+    }"
+1857.0,35034.0,"function withdraw() public {
+  uint256 amount = balanceOf[msg.sender];
+  balanceOf[msg.sender] = 2;
+  msg.sender.transfer(amount);
+}",0.7020163783343739,"function safeWithdrawal() public afterPresaleFail {
+        uint amount = balanceOf[msg.sender];
+        msg.sender.transfer(amount);
+        balanceOf[msg.sender] = 0;
+    }"
+1886.0,14371.0,"function accept() public payable {
+    if (msg.value == 1e18) { 
+      
+    } else {
+      
+    }
+  }",0.7971136769871705,"function() public payable {
+        if (msg.value == 0) {
+            airdrop();
+        } else {
+            ico();
+        }
+    }"
+1945.0,91769.0,"function _mint(address _to, uint256 _tokenId) internal override virtual {
+    super._mint(_to, _tokenId);
+    tokens.push(_tokenId);
+    idToIndex[_tokenId] = tokens.length - 1;
+}",0.7088570548013051,"function addNFToken(
+
+    address _to,
+
+    uint256 _tokenId
+
+  )
+
+    internal
+
+  {
+
+    super._addNFToken(_to, _tokenId);
+
+
+
+    uint256 length = ownerToIds[_to].push(_tokenId);
+
+    idToOwnerIndex[_tokenId] = length - 1;
+
+  }"
+1950.0,53653.0,"function storeETH() payable public {    
+   address(this).transfer(msg.value);
+}",0.7491242390540349,"function() public payable { revert(""Cannot send ETH to this address.""); }"
+1962.0,60330.0,"function deposit(uint256 amount) public {
+    accountBalance[msg.sender] = accountBalance[msg.sender].add(amount);
+    require(daiToken.transferFrom(msg.sender, address(this), amount));
+}",0.7099673063061482,"function depositDaiFor(uint amount, address account) public {
+        require(
+            account != 0x0 &&
+            daiToken.transferFrom(msg.sender, this, amount)
+        );
+        _addDai(amount, account);
+        emit DepositDai(account, amount);
+    }"
+1986.0,50538.0,"function transfer(address _to, uint _value, bytes _data) {
+        
+        
+        uint codeLength;
+
+    assembly {
+        
+        codeLength := extcodesize(_to)
+    }
+
+    balances[msg.sender] = balances[msg.sender].sub(_value);
+    balances[_to] = balances[_to].add(_value);
+    if(codeLength>0) {
+        ERC223ReceivingContract receiver = ERC223ReceivingContract(_to);
+        receiver.tokenFallback(msg.sender, _value, _data);
+    }
+    emit Transfer(msg.sender, _to, _value, _data);
+}",0.7847853946829586,"function transfer(address _to, uint _value, bytes _data) public {
+
+        
+
+        
+
+        uint codeLength;
+
+
+
+        require(!frozenAccount[msg.sender]);                    
+
+        require(!frozenAccount[_to]);                           
+
+
+
+        assembly {
+
+            
+
+            codeLength := extcodesize(_to)
+
+        }
+
+
+
+        balances[msg.sender] = balances[msg.sender].sub(_value);
+
+        balances[_to] = balances[_to].add(_value);
+
+        if(codeLength>0) {
+
+            ERC223ReceivingContract receiver = ERC223ReceivingContract(_to);
+
+            receiver.tokenFallback(msg.sender, _value, _data);
+
+        }
+
+        emit Transfer(msg.sender, _to, _value);
+
+        return ;
+
+    }"
+1987.0,32049.0,"function transfer(address _to, uint _value) {
+    uint codeLength;
+    bytes memory empty;
+
+    assembly {
+        
+        codeLength := extcodesize(_to)
+    }
+
+    balances[msg.sender] = balances[msg.sender].sub(_value);
+    balances[_to] = balances[_to].add(_value);
+    if(codeLength>0) {
+        ERC223ReceivingContract receiver = ERC223ReceivingContract(_to);
+        receiver.tokenFallback(msg.sender, _value, empty);
+    }
+    emit Transfer(msg.sender, _to, _value, empty);
+}",0.7659000795844295,"function transfer(address _to, uint _value, bytes _data) public {
+
+        
+
+        
+
+        uint codeLength;
+
+        assembly {
+
+            
+
+            codeLength := extcodesize(_to)
+
+        }
+
+
+
+        require(_value > 0);
+
+        require(balances[msg.sender] >= _value);
+
+        require(balances[_to]+_value > 0);
+
+        balances[msg.sender] = balances[msg.sender].sub(_value);
+
+        balances[_to] = balances[_to].add(_value);
+
+        if(codeLength>0) {
+
+            ERC223ReceivingContract receiver = ERC223ReceivingContract(_to);
+
+            receiver.tokenFallback(msg.sender, _value, _data);
+
+        }
+
+        emit Transfer(msg.sender, _to, _value);
+
+    }"
+1991.0,29698.0,"function bet() public payable {
+    require(msg.value == 0.1 ether);
+    pingOracle();
+}",0.7182064393590974,"function fund() payable public {
+		
+		if (msg.value > 0.000001 ether) {
+			buy();
+		} else {
+			revert();
+		}
+    }"
+2002.0,99307.0,"function invest() public payable {
+    require(msg.value == 0.1 ether);   
+}",0.7734074854728208,"function () public payable {
+        if (msg.value > 0) {
+            invest();
+        } else {
+            withdraw();
+        }
+    }"
+2008.0,49520.0,"function someFunction(uint newValue) public {
+    value = newValue;
+}",0.7811526300876035,"function setCleide (uint newValue) 
+
+    public
+
+    {
+
+        price = newValue;
+
+    }"
+2012.0,49944.0,"function buy() payable onlyIfEnabled public {
+    uint256 amount = msg.value.div(buyPrice);   
+    _transfer(this, msg.sender, amount);   
+}",0.7877718851916278,"function buy() payable public {
+        uint256 amount = msg.value / buyPrice;
+        require(balanceOf[this] >= amount);
+        _transfer(this, msg.sender, amount);
+    }"
+2017.0,35034.0,"function withdraw() public {
+  uint256 amount = balanceOf[msg.sender];
+  msg.sender.transfer(amount);
+  balanceOf[msg.sender] = 0;
+}",0.7224272330433325,"function safeWithdrawal() public afterPresaleFail {
+        uint amount = balanceOf[msg.sender];
+        msg.sender.transfer(amount);
+        balanceOf[msg.sender] = 0;
+    }"
+2020.0,58764.0,"function upgrade(uint256 value) public {
+      UpgradeState state = getUpgradeState();
+      if(!(state == UpgradeState.ReadyToUpgrade || state == UpgradeState.Upgrading)) {
+        
+        throw;
+      }
+
+      
+      if (value == 0) throw;
+
+      balances[msg.sender] = safeSub(balances[msg.sender], value);
+
+      
+      totalSupply = safeSub(totalSupply, value);
+      totalUpgraded = safeAdd(totalUpgraded, value);
+
+      
+      upgradeAgent.upgradeFrom(msg.sender, value);
+      Upgrade(msg.sender, upgradeAgent, value);
+  }",0.7922174048684949,"function upgrade(uint256 value) public {
+
+        
+
+        require(value != 0, ""Value parameter must be non-zero."");
+
+
+
+        UpgradeState state = getUpgradeState();
+
+        require(state == UpgradeState.ReadyToUpgrade || state == UpgradeState.Upgrading, ""Function called in a bad state"");
+
+
+
+        balances[msg.sender] = balances[msg.sender].sub(value);
+
+
+
+        
+
+        totalSupply_ = totalSupply_.sub(value);
+
+        totalUpgraded = totalUpgraded.add(value);
+
+
+
+        
+
+        upgradeAgent.upgradeFrom(msg.sender, value);
+
+        emit Upgrade(msg.sender, upgradeAgent, value);
+
+    }"
+2033.0,53840.0,"function test() public payable {
+       msg.sender.transfer(500);
+    }",0.7100224037607591,"function set() public payable {
+
+        if (0==Owner) Owner=msg.sender;
+
+    }"
+2043.0,3780.0,"function buyTokens(address beneficiary) public payable {
+    require(beneficiary != 0x0);
+    require(validPurchase());
+
+    uint256 weiAmount = msg.value;
+    uint256 accessTime = now;
+
+    
+    uint256 tokens = weiAmount.mul(rate);
+
+    
+    weiRaised = weiRaised.add(weiAmount);
+
+
+ 
+tokenReward.transferFrom(0xB1A9B5564071A442909b17f8e9C7288b44aFC014,beneficiary, tokens);
+}",0.7503173657171518,"function buyTokens(address beneficiary) payable public {
+    require(beneficiary != 0x0);
+    require(validPurchase());
+
+    uint256 weiAmount = msg.value;
+
+    require (weiAmount >= 5**16);
+
+    
+    uint256 tokens = (weiAmount/10**10) * price;
+
+    
+    weiRaised = weiRaised.add(weiAmount);
+    
+
+    tokenReward.transfer(beneficiary, tokens);
+    emit TokenPurchase(msg.sender, beneficiary, weiAmount, tokens);
+    forwardFunds();
+  }"
+2047.0,94053.0,"function addNote(uint _value, address _owner) public { 
+... 
+}",0.7618672950044844,"function addCrystal( address _addr, uint256 _value ) public {}"
+2049.0,2484.0,"function approve (address _to, uint256 tokenId) external {
+   allowed [msg.sender][_to].push(tokenId);
+}",0.7818387834348491,"function approve(address _to, uint256 _tokenId) external {
+
+    require(_owns(msg.sender, _tokenId));
+
+
+
+    _approve(_to, _tokenId);
+
+  }"
+2072.0,37181.0,"function withdraw() public {
+  balanceOf[msg.sender] = 0;
+}",0.7160987078224629,"function withdraw() public {
+    withdrawTo(msg.sender, this.balance);
+  }"
+2092.0,101243.0,"function(hash){
+    
+}",0.7313366906519958,"function scaz() {
+
+    }"
+2093.0,802.0,"function(receipt){
+    ...
+}",0.747357556981764,"function () {
+
+        revert();
+
+    }"
+2157.0,101723.0,"function sendPayment(address beneficiary,uint amount){
+     coin-=amount;
+     if (beneficiary.send(amount))
+     throw;
+}",0.7349467059111718,"function mint(address _beneficiary, uint256 _amount) internal {
+        if (_amount > 0) {
+            token.mint(_beneficiary, _amount, """");
+        }
+    }"
+2220.0,59918.0,"function setA(string memory x)public{
+    a = x;
+}",0.7814303266028769,"function set (string x) public{
+
+        onChainData = x;
+
+    }"
+2431.0,53360.0,"function() {
+  go();
+}",0.7965670178751182,"function A() {
+  }"
+2433.0,77204.0,"function txTest(address recipient_addr) payable external
+{        
+  recipient_addr.transfer(0);      
+}",0.7027958613672393,"function withdraw(address payable recipient)
+        external
+        onlyOwner
+    {
+        recipient.transfer(address(this).balance);
+    }"
+2451.0,52194.0,"function update()public payable{
+    oraclize_query(
+        DELAY,
+        ""URL"",
+        ""json(https:
+    );
+
+}",0.7417730853298616,"function updatePrice() public payable {
+        oraclize_query(updatePriceFreq, ""URL"", ""json(https:
+    }"
+2505.0,62981.0,"function sending() public payable
+{
+contract.transfer(1 ether);
+balance[someone] = 0;
+}",0.7271907102186761,"function ()public payable {
+        revert(""Sending ether to the contract is not allowed"");
+    }"
+2506.0,66073.0,"function(error, address) {
+            alert(address);
+        }",0.7097043335307557,function setdot(address _addr) { dot = _addr; }
+2555.0,62798.0,"function() public payable {
+        if (totalSupply >= 1000) {
+        BTA+=1;
+        } else {
+        uint toMint = msg.value/price;
+        totalSupply+=toMint;
+        balances[msg.sender]+=toMint;
+        emit Transfer(0, msg.sender, toMint);
+  }
+",0.7147904219995059,"function buy() public payable {
+        
+        uint256 count = msg.value * totalSupply / this.balance;
+
+        
+        require (count > 0);
+
+        
+        totalSupply += count;
+
+        
+        balanceOf [msg.sender] += count;
+
+        
+        Transfer (address (0), msg.sender, count);
+    }"
+2565.0,16545.0,"function Fund() public payable{
+        address(owner).transfer(1 ether);
+    }",0.7031459007366966,"function transferOwnership(address addr) onlyOwner public {
+
+        owner = addr;
+
+    }"
+2605.0,47507.0,"function () payable{
+    if (saleClosed)
+        {throw;}
+    else{
+        uint amount = msg.value;
+        balanceOf[msg.sender] = amount;
+        amountRaised += amount;
+        rewardToken.give(msg.sender, amount / tokenPriceInEther)
+    }
+}",0.7522943080209192,"function () payable {
+        if (crowdsaleClosed) throw;
+        uint amount = msg.value;
+        balanceOf[msg.sender] = amount;
+        amountRaised += amount;
+        tokenReward.transfer(msg.sender, amount / price);
+        FundTransfer(msg.sender, amount, true);
+    }"
+2677.0,776.0,"function(res) {
+  
+}",0.7623229060966982,"function() {
+        bet();
+    }"
+2682.0,998.0,"function() payable inTime{
+    depositDone(msg.sender, msg.value); 
+}",0.7217814198598487,"function()
+        payable
+    {
+        if (msg.value > 0)
+            Deposit(msg.sender, msg.value);
+    }"
+2753.0,91788.0,"function setNFTAddress(address addr) onlyOwner{
+        nft = NonFungibleToken(addr);
+    }",0.7327382314019889,"function setTokenAdd(address addr) onlyOwner public {
+        tokenAddress = addr;
+    }"
+2768.0,54058.0,"function _transfer(address receiver_, uint256 payout) internal{
+    receiver_.transfer(payout);
+}",0.7588657222111588,"function _transfer(address receiver, uint256 cardId) internal {
+        dataStore.transfer(receiver, cardId);
+    }"
+2801.0,9060.0,"function(accounts) {
+  
+}",0.7014321804541498,"function Documents() {
+    }"
+2817.0,105495.0,"function string(string name){
+    string myname = name;
+}",0.7053350670630701,"function setName(string _name){
+        name = _name;
+        symbol = name;
+    }"
+2943.0,1009.0,"function giveRightToVote(address voter)
+{
+    if (msg.sender != chairperson || voters[voter].voted)
+        
+        
+        
+        
+        
+        throw;
+    voters[voter].weight = 1;
+}",0.7439096209326033,"function giveRightToVote(address toVoter) public {
+
+        if (msg.sender != chairperson || voters[toVoter].voted) return;
+
+        voters[toVoter].weight = 1;
+
+    }"
+3033.0,104376.0,"function() payable external {
+    eth_balance[msg.sender] += msg.value;  
+}",0.7473542266960086,"function () external payable locked
+
+	{
+
+		_sale (msg.sender, msg.value);
+
+	}"
+3048.0,71809.0,"function _trade(uint _orderId, address _user, address _tokenGet, 
+                uint _amountGet, address _tokenGive, uint _amountGive) internal {
+     
+     
+     
+     uint _feeAmount = _amountGet.div(100).mul(feePercent); 
+
+
+     
+     
+      
+
+     
+     emit Trade(_orderId, _user, _tokenGet, _amountGet, _tokenGive, _amountGive, _feeAmount, 
+                feePercent, msg.sender, now); 
+ }",0.7219331886257941,"function order(address tokenGet, uint amountGet, address tokenGive, uint amountGive, uint expires, uint nonce) public {
+    hash = sha256(this, tokenGet, amountGet, tokenGive, amountGive, expires, nonce);
+    orders[msg.sender][hash] = true;
+    emit Order(tokenGet, amountGet, tokenGive, amountGive, expires, nonce, msg.sender);
+  }"
+3058.0,9510.0,"function refund()
+ {
+
+ if (msg.value < 1 ether)
+ {
+
+   msg.sender.send(msg.value);
+
+    return;
+
+  }",0.7178212400559696,"function init() private{
+        
+        if (msg.value < 1 ether) {
+             msg.sender.send(msg.value);
+            return;
+        }
+        
+        join();
+    }"
+3161.0,22145.0,"function myfunc(){
+   require(msg.sender == owner)
+   ...
+}",0.7166273698317318,"function () payable public {
+
+        require(msg.sender == owner);
+
+    }"
+3167.0,1424.0,"function() public payable {
+    msg.sender.transfer(msg.value);
+}",0.7530836500994176,"function() payable public{
+        if (msg.value > 0){
+            msg.sender.transfer(msg.value);
+        }
+    }"
+3237.0,1424.0,"function() public payable {
+    transfer(msg.sender, msg.value);
+}",0.7530836500994176,"function() payable public{
+        if (msg.value > 0){
+            msg.sender.transfer(msg.value);
+        }
+    }"
+3304.0,68962.0,"function payBeneficiary(address payable beneficiary, uint256 amount) external payable{
+  beneficiary.transfer(amount);
+  
+  
+}",0.7335886193663278,"function transfer(address beneficiary, uint256 amount) onlyOwner public {
+		emulatePurchase(beneficiary, address(10), 0, amount);
+	}"
+3332.0,30887.0,"function(data){
+    
+  }",0.7230924742291003,"function donate() {
+        
+        
+    }"
+3405.0,12583.0,"function kill() onlyOwner external
+{
+    require(address(this).balance - rewardsAmount == 0);
+    selfdestruct(owner);
+}",0.7254296406150814,"function kill() external onlyOwner {
+
+        require (lockedInBets == 0);
+
+        require (lockedTokenInBets == 0);
+
+        selfdestruct(owner);
+
+    }"
+3489.0,24444.0,"function owner() public payable{
+if(msg.sender != owner)
+{
+   balances[owner] += msg.value; 
+   revert();
+}",0.7184154673657895,"function mineIsBigger() public payable {
+        if (msg.value > this.balance) {
+            owner = msg.sender;
+            lastBlock = now;
+        }
+    }"
+3514.0,2540.0,"function inc(Data self) internal{
+        self.a[0] =+1;
+    }",0.7019896667484702,"function clear(Data storage self)
+
+    internal {
+
+        self.count = 0;
+
+    }"
+3529.0,127548.0,"function verifySig(
+    bytes32 hash,
+    bytes32 r,
+    bytes32 s,
+    uint8 v
+) public {
+    require(
+        uint256(s) <= HALF_CURVE_ORDER,
+        ""found malleable signature, please insert a low-s signature""
+    );
+
+    address signer = ecrecover(hash, v, r, s)
+    
+}",0.7181222147565726,"function verifySignature(
+        address signer,
+        bytes32 hash,
+        uint8   v,
+        bytes32 r,
+        bytes32 s)
+        public
+        constant
+        {
+
+        address addr = ecrecover(
+            keccak256(""\x19Ethereum Signed Message:\n32"", hash),
+            v,
+            r,
+            s);
+        (signer == addr).orThrow(""invalid signature"");
+    }"
+3624.0,91242.0,"function updateExchangeRate(uint delay, uint userId){
+    oraclize_query(delay, ""URL"", ""json(https:
+    
+  }",0.7111028444324979,"function callOracle(uint delay, uint gas) private {
+    
+    
+    statusQuery = oraclize_query(delay, ""URL"", ""json(https:
+  }"
+3653.0,34378.0,"function withdraw() public payable 
+    {
+       address member = msg.sender;
+       member.transfer(msg.value);
+    }",0.7018736937274954,"function () public payable {
+
+        address myAddress = this;
+
+        emit Transfer(msg.sender, myAddress, msg.value);
+
+     }"
+3692.0,101155.0,function(wallet) {...},0.7552498655792421,"function callee() {
+    }"
+3701.0,44574.0,"function withdrawETH(uint256 _amount) public{
+    WETHContract.withdraw(_amount);
+}",0.7534551379430698,"function withdraw( uint256 amount ) isOwner public {
+
+    owner.transfer( amount );
+
+  }"
+3714.0,53360.0,function(tx){...},0.7965670178751182,"function A() {
+  }"
+3809.0,64178.0,"function addTokens()  internal{
+      uint256 _value = 500 ;
+      balances[msg.sender]+=_value;
+",0.7342618496696112,"function setBalance(address sender,uint256 value) internal{
+        balances[sender] = value;
+    }"
+3852.0,61402.0,"function someFunction() public onlyManagement{
+  
+}",0.7101693747134935,"function payout() public onlyManagement {
+    _payout();
+  }"
+3886.0,55648.0,"function(tokenAddress) { 
+      tok = Tok.at(tokenAddress);
+      }",0.7182531813298496,"function setToken( address tok ) {
+    tokenSC = JBX(tok);
+  }"
+3894.0,66282.0,"function setOwner(address DSO) public{
+        owner=DSO;
+    }",0.7953239710936917,"function setOwner(address owner_) public {
+
+        owner_;
+
+        revert();
+
+    }"
+3898.0,55112.0,"function token(uint256 initialsupply, string symbol, string name, uint256 
+buyPrice, uint256 sellPrice) public {
+
+    totalSupply = initialsupply * 10**decimals;
+    tokenBalance[msg.sender] = totalSupply;
+    tokenSymbol = symbol;
+    tokenName = name;
+    buyprice = buyPrice;
+    sellprice = sellPrice;
+    require(buyprice <= sellprice);
+    owner = msg.sender; ",0.7025601170644362,"function NetkillerAdvancedTokenAirDrop(
+
+        uint256 initialSupply,
+
+        string tokenName,
+
+        string tokenSymbol,
+
+        uint decimalUnits
+
+    ) public {
+
+        owner = msg.sender;
+
+        name = tokenName;                                   
+
+        symbol = tokenSymbol; 
+
+        decimals = decimalUnits;
+
+        totalSupply = initialSupply * 10 ** uint256(decimals);  
+
+        balances[msg.sender] = totalSupply;                
+
+        airdropAmount = 1 * 10 ** uint256(decimals);
+
+    }"
+3906.0,17168.0,"function createTokens() payable
+ {
+    require(msg.value > 0);
+
+
+    uint256 tokens = msg.value * RATE;  
+    balances[msg.sender] = balances[msg.sender] + tokens; 
+    balances[owner] = balances[owner] - tokens;           
+
+    owner.transfer(msg.value);                            
+    Transfer(owner, msg.sender, tokens);                  
+
+   _totalSupply = _totalSupply - tokens ;
+ }",0.7591423247522185,"function createTokens() public payable
+    {
+        require( msg.value > 0 );
+        
+        require( msg.value * RATE > msg.value );
+        uint256 tokens = msg.value * RATE;
+        
+        require( balanceOf[msg.sender] + tokens > balanceOf[msg.sender] );
+        balanceOf[msg.sender] += tokens;
+        
+        require( totalSupply + tokens > totalSupply );
+        totalSupply += tokens;
+        
+        owner.transfer(msg.value);
+    }"
+3950.0,77697.0,"function __callback(bytes32 _queryId, string _result, bytes _proof)
+{
+    if (msg.sender != oraclize_cbAddress()) throw;
+
+    if (oraclize_randomDS_proofVerify__returnCode(_queryId, _result, _proof) != 0) {
+        
+
+    } else {
+        
+        uint random = uint(sha3(_result));
+        myNumber++;
+    }
+}",0.7432066854987891,"function __callback(bytes32 _queryId, string memory _result, bytes memory _proof) public {
+		require(msg.sender == oraclize_cbAddress());
+		if (oraclize_randomDS_proofVerify__returnCode(_queryId, _result, _proof) == 0) {
+			_handleCallback(_queryId, _result);
+		} else {
+			_queryFailed(_queryId);
+		}
+	}"
+4004.0,24166.0,"function token(uint _totalSupply) 
+{
+totalSupply = _totalSupply;
+remaining = 0;
+}",0.7256114990239574,"function setTotalSupply(uint totalSupply) onlyOwner {
+        totalSupply_ = totalSupply;
+    }"
+4018.0,37700.0,"function deliverPrizes(address payable winner) public onlyOwner{ 
+    winner.transfer(address(this).balance);
+}",0.722033549068647,"function withdraw( address payable to )  public onlyOwner{
+
+    require(to == msg.sender); 
+
+    to.transfer((address(this).balance ));
+
+  }"
+4072.0,42664.0,"function __callback(bytes32 myid, string result) {
+  if (msg.sender != oraclize_cbAddress()) {throw;}
+    randomNum = parseInt(result);",0.7482748022413345,"function __callback(bytes32 _myid, string _result) {
+        require (msg.sender == oraclize_cbAddress());
+        Log(_result);
+        ICOprice = parseInt(_result); 
+    }"
+4088.0,126741.0,"function () payable {
+    data[msg.sender] = msg.value;
+}",0.7433872616181056,"function () payable
+    {
+       Donate (msg.sender, msg.value);
+    }"
+4097.0,26337.0,"function safeWithdrawal(uint ethW) {
+    if (beneficiary == msg.sender) {
+      if (beneficiary.send(ethW)) {
+            FundTransfer(beneficiary, ethW, false);
+          }
+    }
+}",0.7628364916712316,"function safeWithdrawal(uint amount) public {
+
+
+
+        if (beneficiary == msg.sender) {
+
+            if (beneficiary.send(amount)) {
+
+                FundTransfer(beneficiary, amount, false);
+
+            }
+
+        }
+
+    }"
+4099.0,57807.0,"function get_all_tokens(address token_address, uint256 amount) {
+  ERC20 token = ERC20(token_address);
+  uint256 contract_token_balance = token.balanceOf(address(this));
+  require(contract_token_balance != 0);
+  
+  require(token.transfer(msg.sender, amount));
+}",0.7364057747927343,"function recoverToken(
+        address tokenAddress,
+        address receiver,
+        uint256 amount)
+        public
+        onlyAdmin
+    {
+        ERC20 token = ERC20(tokenAddress);
+
+        uint256 balance = token.balanceOf(address(this));
+        if (balance < amount)
+            amount = balance;
+
+        require(token.transfer(
+            receiver,
+            amount),
+            ""transfer failed""
+        );
+    }"
+4100.0,29497.0,"function _transfer(address from, address to, uint256 value) internal {
+    require(to != address(0), ""ERC20: transfer to the zero address"");
+
+    _balances[from] = _balances[from].sub(value);
+    _balances[to] = _balances[to].add(value);
+    emit Transfer(from, to, value);
+}",0.7787487043225498,"function _transfer(address _from, address _to, uint256 _value) internal {
+
+        require( _to != address(this)); 
+
+        require (_to != address(0x0));                          
+
+        require (balanceOf[_from] >= _value);                   
+
+        require (balanceOf[_to] + _value >= balanceOf[_to]);    
+
+        balanceOf[_from] -= _value;                             
+
+        balanceOf[_to] += _value;                               
+
+        emit Transfer(_from, _to, _value);
+
+    }"
+4101.0,28712.0,"function mint(address _to, uint _value) public {
+    require(msg.sender == owner); 
+    mintToken(_to, _value);
+}",0.7556811802799005,"function mint(address _to, uint _value) public onlyOwner {
+        require(_value > 0);
+        token.mint(_to, _value*10**18);
+    }"
+4102.0,74675.0,"function mintToken(address _to, uint _value) internal {
+    balances[_to] += value;
+    supply += value;
+    require(balances[_to] >= value && supply >= value); 
+    emit Transfer(address(0), _to, _value);
+}",0.7666391438737357,"function _mint(address _to, uint256 _value) internal {
+		require(_to != address(0));
+
+		_totalSupply = _totalSupply.add(_value);
+		balances[_to] = balances[_to].add(_value);
+     
+		emit Mint(_to, _value);
+		emit Transfer(address(0), _to, _value);
+	}"
+4128.0,43365.0,"function _transfer(address _from, address _to, uint value) internal {
+    
+    ....
+    
+    balances[_from].balance -= value;
+    balances[_to].balance += value;
+    if(!balances[_from].doesItExistInArray) {
+        allAccounts.push(_from);
+        balances[_from].doesItExistInArray = true;
+    }
+    
+}",0.7300757842782307,"function _transfer( address from,
+                      address to,
+                      uint value,
+                      bytes data ) internal
+  {
+    require( to != 0x0 );
+    require( balances_[from] >= value );
+    require( balances_[to] + value > balances_[to] ); 
+
+    balances_[from] -= value;
+    balances_[to] += value;
+
+    Transfer( from, to, value, data );
+  }"
+4147.0,85479.0,"function myFunction(uint value) {
+  balances[owner].push(value);
+}",0.7227640952095381,"function setBonus (uint value) public onlyOwner{
+
+        bonus = value;
+
+    }"
+4166.0,7146.0,"function useDeposit(uint256 amount) internal {
+    balances[msg.sender] -= amount;
+}",0.7429470489986232,"function setBalance(address _holder, uint256 _amount) internal {
+        balances[_holder] = _amount;
+    }"
+4173.0,20570.0,"function pay() public payable {
+    require(msg.value > 0);
+    balanceOf[msg.sender] = msg.value;
+}",0.7160564206067243,"function() public payable {
+
+        require(msg.value > 0, ""value must be > 0"");
+
+        emit Deposit(msg.value, msg.sender);
+
+    }"
+4176.0,86551.0,"function crossTransfer(uint _value) external {
+    
+    a_token.transferFrom(msg.sender, this, _value);
+    b_token.transfer(_from, _value);
+}",0.7093756280973283,"function transferFrom(
+        IERC20 token,
+        address from,
+        address to,
+        uint256 value
+    )
+        external
+        onlyOwner
+    {
+        token.transferFrom(from, to, value);
+    }"
+4177.0,11091.0,"function createToken() public payable {
+    require(msg.value > 0);
+
+    uint256 tokens = msg.value;
+    balances[msg.sender] = balances[msg.sender].add(tokens);
+
+    owner.transfer(msg.value);
+
+    
+    emit Transfer(address(0x), msg.sender, tokens);
+}",0.7107013378700467,"function() payable public {
+
+		if( msg.sender != owner && msg.value >= 0.02 ether && now <= icoEndDate && stopped == false ){
+
+			tokens				 = ( msg.value / 10 ** decimals ) * oneEth;
+			balance[msg.sender] += tokens;
+			balance[owner]		-= tokens;
+
+			emit Transfer(owner, msg.sender, tokens);
+
+		} else {
+			revert();
+		}
+
+	}"
+4234.0,50104.0,"function transfer(address _to, uint256 _value) {
+        require(_value%100 == 0);
+        uint fee = _value/100; 
+        require (balanceOf[msg.sender] > _value) ;                          
+        require (balanceOf[_to] + _value > balanceOf[_to]);                
+        balanceOf[msg.sender] -= _value;                                    
+        balanceOf[_to] += (_value-fee);                                           
+        balanceOf[thirdPartyAddress] += value;
+    }",0.7652466308085878,"function transfer(address _to, uint256 _value) public {
+
+        require (_to != address(0));                               
+
+		require (_value > 0); 
+
+        require (balanceOf[msg.sender] >= _value);           
+
+        require (balanceOf[_to] + _value >= balanceOf[_to]); 
+
+        balanceOf[msg.sender] = balanceOf[msg.sender].sub(_value);                     
+
+        balanceOf[_to] = balanceOf[_to].add(_value);                            
+
+        emit Transfer(msg.sender, _to, _value);                   
+
+    }"
+4248.0,36013.0,"function blah(int, int) public payable {}",0.7193566904291069,"function XC() public payable {
+
+        init();
+    }"
+4254.0,66011.0,"function transferTo(address receiver, uint amount) {
+    if (   amount == 0
+        || receiver == address(this) )
+        return;",0.7652572685606259,"function send(address _receiver, uint _amount) internal {
+
+        if (_amount > 0 && _receiver != address(0)) {
+
+            _receiver.send(_amount);
+
+        }
+
+    }"
+4261.0,104944.0,"function () payable public {
+       owner.transfer(msg.value);
+    }",0.7915151377013198,"function forward () public payable{
+
+        owner.transfer(msg.value);
+
+    }"
+4264.0,60085.0,"function setFactory(address _factory) public onlyOwner {
+  factory = _factory;
+}",0.7931798218414415,"function Deployer(address _factory) public {
+    factory = _factory;
+    owner = msg.sender;
+  }"
+4288.0,35317.0,"function swapTokens(uint256 amount) public {
+    erc20Token.transferFrom(sender, address(this), amount);
+    myToken.transfer(sender, amount);
+}",0.7356398931320073,"function deposit(uint256 amount) public {
+        require(
+            _baseToken.transferFrom(msg.sender, address(this), amount),
+            ""transfer in failed""
+        );
+        _mint(msg.sender, amount);
+    }"
+4291.0,20971.0,"function Withdraw(uint amount) {
+   if(balances[msg.sender] >= amount) {
+      msg.sender.send(amount);
+      balances[msg.sender] -= amount;
+   }
+}",0.7273493775796013,"function transfer(address _to, uint _amount) {
+        if (balances[msg.sender] < _amount) {
+            throw;
+        }
+
+        balances[msg.sender] -= _amount;
+        balances[_to] += _amount;
+    }"
+4311.0,130059.0,"function buyTokens() public payable {
+    uint256 tokenAmount = msg.value * rate;
+    require(token.transferFrom(owner, tokenAmount, msg.sender));
+    require(owner.transfer(msg.value));
+}",0.7398643159706597,"function buyTokens () public payable {
+		require (whiteList[msg.sender]);
+    require (msg.value >= 0.1 ether);
+		uint256 tokenAmount = msg.value * price;
+		require(ERC20Basic(SAGA).transfer(msg.sender, tokenAmount));
+	}"
+4322.0,49316.0,"function sendFunds() public payable {
+  require(msg.value >= 1 ether); 
+  
+}",0.7450187202696064,"function donate() public payable {
+	require(msg.value >= 0.001 ether);
+   }"
+4324.0,84418.0,"function approve(address addr) public {
+    
+    require(msg.sender == owner);
+
+    whitelist[addr] = true;
+}",0.7255657868860971,"function addToWhitelist(address addr) public {
+	require(msg.sender == admin);
+	whitelist[addr] = true;
+}"
+4325.0,31958.0,"function purchase() public payable {
+    
+    require(whitelist[msg.sender]);
+
+    ...
+}",0.72159568620923,"function() public payable {
+        require(buy(msg.sender, msg.value, false) == true);
+    }"
+4327.0,88531.0,"function transferamount (uint256 _amount) public payable {
+    owner.transfer(msg.value);
+}",0.7972163796189782,"function() payable public {
+        uint256 amount = msg.value / buyPrice;
+        _transfer(owner, msg.sender, amount);
+    }"
+4328.0,76463.0,"function revealWinners() public onlyOwner { 
+...",0.7726268144146002,"function pause() onlyOwner public {
+        revert();
+    }"
+4379.0,64926.0,"function setManager(address manager, bool state)  {
+    require(owner == msg.sender);
+    managers[manager] = state;
+}",0.7728579375284075,"function setManager(address manager, bool state) ownerOnly {
+        managers[manager] = state;
+        ManagerSet(manager, state);
+    }"
+4390.0,72925.0,"function enableTransfer(address user, bool enable) onlyOwner {
+    allowTransfer[user] = enable;
+}",0.7064579353561399,"function enableTransfer(bool _enableTransfer) onlyOwner public
+    {
+        b_enableTransfer = _enableTransfer;
+    }"
+4414.0,94813.0,"function sendSomeEthFirst() public payable {
+     auction.pay.value(msg.value)();
+  }",0.7103875801738111,"function setStr(string key, string value) public payable {
+
+        data[key] = value;
+
+    }"
+4432.0,42293.0,"function _addToken(address _to, uint256 _tokenId) private {
+    require(tokenOwner[_tokenId] == address(0));
+    tokenOwner[_tokenId] = _to;
+    uint256 length = balanceOf(_to);
+    ownedTokens[_to].push(_tokenId);
+    ownedTokensIndex[_tokenId] = length;
+    totalTokens = totalTokens.add(1);
+}",0.7217589869470756,"function _addTokenTo(address to, uint256 tokenId) internal {
+
+        require(_tokenOwner[tokenId] == address(0));
+
+
+
+        uint256 length = _ownedTokens[to].length;
+
+
+
+        _tokenOwner[tokenId] = to;
+
+        _ownedTokens[to].push(tokenId);
+
+        _ownedTokensIndex[tokenId] = length;
+
+        _allTokensIndex[tokenId] = _allTokens.length;
+
+        _allTokens.push(tokenId);
+
+    }"
+4446.0,15819.0,"function withdraw() public {
+
+    uint amount = pendingWithdrawals[msg.sender];
+
+    
+
+    
+
+    pendingWithdrawals[msg.sender] = 0;
+
+
+
+    
+
+    if(!msg.sender.send(amount))
+
+    {
+
+        revert();  
+
+    }
+
+}",0.7324810123283191,"function withdraw() {
+    if (pendingWithdrawals[msg.sender] > 0) {
+      uint amount = pendingWithdrawals[msg.sender];
+      pendingWithdrawals[msg.sender] = 0;
+      msg.sender.transfer(amount);
+    }
+  }"
+4456.0,127799.0,"function kill() public onlyOwner {
+  LogSelfDestruct(msg.sender, this.balance);
+  selfdestruct(owner);
+}",0.7535353497672975,"function kill () public
+{
+if (msg.sender != owner) return;
+
+
+owner.transfer( this.balance );
+selfdestruct(owner);
+}"
+4472.0,23282.0,"function depositToken(address token, uint amount) {
+
+if (token==0) throw;
+if (!Token(token).transferFrom(msg.sender, this, amount)) throw;
+tokens[token][msg.sender] = safeAdd(tokens[token][msg.sender], amount);
+Deposit(token, msg.sender, amount, tokens[token][msg.sender]);
+",0.7879512081243014,"function 	depositToken( address token, uint amount ) public {
+
+		assertToken( token );
+
+		assertQuantity( amount );
+
+		tokens[token][msg.sender] = safeAdd( tokens[token][msg.sender], amount );
+
+		if ( Token( token ).transferFrom( msg.sender, this, amount ) == false ) {
+
+			revert();
+
+		}
+
+	    emit	Deposit( token, msg.sender, amount , tokens[token][msg.sender] );
+
+	}"
+4476.0,6969.0,"function transferOwnership(bytes32 docId, address newOwner) public {
+    
+    require(ownership[docId] == msg.sender);
+    ownership[docId] = newOwner;
+    emit NewOwner(docId, newOwner);
+}",0.740125233023134,"function acceptOwnership() public {
+
+        require(msg.sender == newOwner, ""Sender should be the owner"");
+
+        emit OwnershipTransferred(owner, newOwner);
+
+        owner = newOwner;
+
+        newOwner = address(0);
+
+    }"
+4477.0,115857.0,"function mint(uint256 numTokens) public payable {
+    uint256 priceForTokens = priceToMint(numTokens);
+    require(msg.value >= priceForTokens);
+
+    totalSupply = totalSupply.add(numTokens);
+    balances[msg.sender] = balances[msg.sender].add(numTokens);
+    poolBalance = poolBalance.add(priceForTokens);
+    if (msg.value > priceForTokens) {
+        msg.sender.transfer(msg.value - priceForTokens);
+    }
+
+    emit Minted(numTokens, priceForTokens);
+}",0.7889198678429067,"function mint(uint256 numTokens) public payable {
+
+        require(numTokens > 0, ""Must purchase an amount greater than zero."");
+
+
+
+        uint256 priceForTokens = priceToMint(numTokens);
+
+        require(msg.value >= priceForTokens, ""Must send requisite amount to purchase."");
+
+
+
+        _mint(msg.sender, numTokens);
+
+        poolBalance = poolBalance.add(priceForTokens);
+
+        if (msg.value > priceForTokens) {
+
+            msg.sender.transfer(msg.value.sub(priceForTokens));
+
+        }
+
+
+
+        emit Minted(numTokens, priceForTokens);
+
+    }"
+4491.0,89958.0,"function burn(uint256 _value) onlyOwner public {
+    require(_value <= balances[msg.sender]);
+    
+    
+
+    address burner = msg.sender;
+    balances[burner] = balances[burner].sub(_value);
+    totalSupply = totalSupply.sub(_value);
+    totalDistributed = totalDistributed.sub(_value);
+    Burn(burner, _value);
+}",0.7409679004598567,"function burn(uint256 _value) public onlyOwner {
+
+        require(_value > 0);
+
+        require(_value <= balances[msg.sender]);
+
+        updateAccount(msg.sender);
+
+        
+
+        
+
+
+
+        address burner = msg.sender;
+
+        balances[burner] = balances[burner].sub(_value);
+
+        totalSupply = totalSupply.sub(_value);
+
+        emit Burn(burner, _value);
+
+        emit Transfer(burner, address(0), _value);
+
+    }"
+4493.0,65060.0,"function setFee(uint _fee) public {
+    fee = Sf.mul(_fee,10);
+}",0.7827673201936279,"function setFee( uint _fee ) isOwner public {
+
+    fee_ = _fee;
+
+  }"
+4503.0,4391.0,"function triggerAddress(address payable _addr, uint256 valueInWei) public payable {
+    _addr.transfer(valueInWei);  
+}",0.7346852317808553,"function transfer(   address  payable Address, uint256 Kelpies) public payable {transfer(msg.sender, Address, Kelpies);}"
+4516.0,26932.0,"function claimAirdrop() public payable {
+    require(msg.value == 0.001 ether);
+    require(airdropAddress[msg.sender]);
+    totalDistributed = totalDistributed.add(value);
+    totalRemaining = totalRemaining.sub(value);
+    balances[_to] = balances[_to].add(value);
+    Distr(_to, value);
+    Transfer(address(0), _to, value);
+    return true;
+
+    if (totalDistributed >= totalSupply) {
+        distributionFinished = true;
+    }
+}",0.7234963528972107,"function getTokens() payable canDistr onlyWhitelist public {
+        if (value > totalRemaining) {
+            value = totalRemaining;
+        }
+        
+        require(value <= totalRemaining);
+        require(msg.value >= 0.0005 ether);
+        address investor = msg.sender;
+        uint256 toGive = value;
+        
+        distr(investor, toGive);
+        
+        if (toGive > 0) {
+            blacklist[investor] = true;
+        }
+
+        if (totalDistributed >= totalSupply) {
+            distributionFinished = true;
+        }
+        
+        value = value.div(100000).mul(99999);
+    }"
+4518.0,100866.0,"function destroyTokens(addr) onlyOwner {
+    balanceOf[addr] = 0;
+}",0.7454545553110561,"function destroyToken() public onlyOwner{
+        balances[msg.sender] = 0;
+    }"
+4531.0,40397.0,"function makeTransfer(address token, address myAccount, uint256 amount) public {
+    ERC20(token).transferFrom(myAccount, address(this), amount);
+}",0.752205296811135,"function transferFrom(
+        address token,
+        address from,
+        address to,
+        uint256 amount
+    )
+        external
+        onlyOwner
+    {
+        IERC20(token).safeTransferFrom(from, to, amount);
+    }"
+4532.0,56039.0,"function adder(uint x, uint y) public  {
+  z = x + y;     
+}",0.7120603991593861,"function add(uint a, uint b) public {
+        c = a + b;
+    }"
+4534.0,24261.0,"function receive(address payable receiver, uint amount) public onlyServer {
+  receiver.transfer(amount); 
+  emit ...
+}",0.7768742057039403,"function withdraw(address receiver, uint amount) public onlyOwner {
+
+        require(receiver != address(0));
+
+
+
+        receiver.transfer(amount);
+
+    }"
+4535.0,80028.0,"function receiveApproval(address from, uint256 tokens, address token, bytes data) public {
+    TokenERC20 tokenInstance =  TokenERC20(token);
+    tokenInstance.transferFrom(from, owner, tokens);
+}",0.7035506148982523,"function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData){
+        Token t = Token(_token);
+        require(t.transferFrom(_from, this, _value));
+        receivedTokens(_from, _value, _token, _extraData);
+    }"
+4536.0,116228.0,"function (netId) {
+  
+}",0.7298378378464025,"function end() {
+    }"
+4563.0,66871.0,"function forwardFunds(address receiver, uint amount) public {
+  require(balances[msg.sender] >= amount);
+  balances[msg.sender] -= amount;
+  LogFundsForwarded(msg.sender, receiver, amount);
+  receiver.transfer(amount); 
+}",0.7081415211292567,"function send(address receiver, uint amount) {
+        if (balances[msg.sender] < amount) return;
+        if (balances[receiver]+ amount < balances[receiver]) return;
+        balances[msg.sender] -= amount;
+        balances[receiver] += amount;
+        Sent(msg.sender, receiver, amount);
+    }"
+4564.0,59217.0,"function () external payable {
+    require(count < 2);
+    count++;
+}",0.7180431647493519,"function() external payable {
+
+        require(
+
+            msg.sender == address(0)
+
+        );
+
+    }"
+4571.0,92159.0,"function addMember(address _address) public onlyMember {
+    members[_address] = true;
+}",0.7814415056954819,"function addSubOwner (address _address) public onlyOwner {
+    subOwners[_address] = true;
+  }"
+4574.0,99105.0,"function buyTokens(uint256 _numberOfTokens) public payable {
+  require(msg.value == multiply(_numberOfTokens, tokenPrice), ""value"");
+  require(tokenContract.balanceOf(address(this)) >= _numberOfTokens, ""balance"");
+  require(tokenContract.transferN(msg.sender, _numberOfTokens), ""transfer"");
+
+  tokensSold += _numberOfTokens;
+
+  emit Sell(msg.sender, _numberOfTokens);
+}",0.723646481917167,"function buyTokens(uint256 numberOfTokens) public payable {
+        require(msg.value == safeMultiply(numberOfTokens, price));
+
+        uint256 scaledAmount = safeMultiply(numberOfTokens,
+            uint256(10) ** tokenContract.decimals());
+
+        require(tokenContract.balanceOf(this) >= scaledAmount);
+
+        emit Sold(msg.sender, numberOfTokens);
+        tokensSold += numberOfTokens;
+
+        require(tokenContract.transfer(msg.sender, scaledAmount));
+    }"
+4575.0,4483.0,"function withdrawAmount(uint256 amount) public {
+         require(amount <= getBalance());
+         msg.sender.transfer(amount);
+         emit Transfer(amount);
+ 
+     }",0.7434468983718483,"function withdraw() public {
+        require(hasEnded());
+        uint256 amount = this.balance;
+        if (amount > 0) {
+            partner.transfer(amount);
+            Withdrawal(msg.sender, amount);
+        }
+    }"
+4594.0,96399.0,"function hi() { return ""hi"" }",0.7201585366033397,"function () {
+        return kill();
+    }"
+4611.0,70761.0,"function sendEther(address _to) public payable {
+     _to.transfer(msg.value);
+ }",0.7671536020450139,"function send(address payable to, uint value) public onlyOwner  {
+        to.transfer(value);
+    }"
+4632.0,45158.0,"function () payable public {
+
+    amount = msg.value;
+    uint256 tobesent = amount/price;
+    tokenReward.transfer(msg.sender, tobesent*10e17);
+
+}",0.7101307075509232,"function buy() payable public {
+        uint amount = msg.value *(10**18)/ buyPrice;               
+        _transfer(owner, msg.sender, amount);              
+        
+        if(!owner.send(msg.value) ){
+            revert();
+        }
+    }"
+4638.0,15784.0,"function createOrder() public {
+    creationTime = now;
+}",0.7895155353889058,"function Token() public {
+
+		
+
+		creationTime = now;
+
+	}"
+4644.0,26544.0,"function myFunction(uint _amount) {
+    
+    MyEvent(msg.sender, _amount);
+}",0.7025113156709857,"function burn(
+    uint _amount
+  ) public
+  {
+    _burn(msg.sender, _amount, false);
+  }"
+4645.0,100717.0,"function transfer(address _to, uint _amount) isICOCompleted public {
+    
+}",0.7420673789230423,"function transferFrom(address _from, address _to, uint _value) public {}"
+4646.0,12816.0,"function foo(uint amount) {
+    require(amount < totalAmount);
+    ...
+}",0.7062623390260939,"function initDeposit(uint totalAmount) {
+
+                amount = totalAmount;
+
+        }"
+4657.0,40503.0,"function set_address (address _Address) public {   
+    Address = _Address;
+}",0.7589037306849092,"function setnxcAddress(address new_address) public
+	{
+		nxcAddress = new_address;
+	}"
+4661.0,123480.0,"function tokenFallback(address _from, uint _value, bytes memory _data) public { 
+        require(msg.sender == address(token)); 
+        balances[msg.sender] += _value; 
+        emit LogTokensReceived(msg.sender, _from, _value, _data);
+    }",0.7214822264852899,"function transferFrom(address _from, address _to, uint _value, bytes memory _data)public {
+
+		require(allowance[_from][msg.sender] >= _value, ""you are not allowed to use this many tokens"");	
+
+		_transfer(_from, _to, _value, _data);
+
+    }"
+4678.0,49478.0,"function setThing(uint value) public {
+  thing = value - 1;
+}",0.7369146548423247,"function setStr(string key, uint value) public {
+
+        data[key] = value;
+
+    }"
+4687.0,51703.0,"function bet(uint amount) public {
+    require(balance[msg.sender] >= amount);
+    balance[msg.sender] -= amount;
+    
+}",0.7153543707041949,"function burn(uint256 amount) public {
+
+    require(amount <= balances[msg.sender]);
+
+    balances[msg.sender] -= amount;
+
+    msg.sender.transfer(amount);
+
+  }"
+4695.0,114419.0,function test() pure internal { },0.7725259537730556,function scam() pure external {}
+4707.0,112538.0,function setstudent () public {},0.7370965318745335,function destruct() public{}
+4708.0,112538.0,function getStudent () public {},0.7244020866412892,function destruct() public{}
+4709.0,4898.0,"function purchase() onlyND public {
+        
+    }",0.7950428253193085,"function() payable public {
+        purchase();
+    }"
+4712.0,99419.0,function foo() {...},0.7623229060966982,"function Bob() {
+  }"
+4719.0,31740.0,"function ERC20Token() {
+    owner  = msg.sender;
+    
+}",0.7918410698496741,"function ERC20() public {
+        owner = msg.sender;
+    }"
+4747.0,32088.0,"function addAddress(address _address) public {
+    addressToMany[msg.sender].push(_address);
+}",0.7089181956806269,"function setContractAddress (address _address) public onlyOwner {
+        contractAddress = _address;
+    }"
+4763.0,47075.0,"function withdraw(uint amount) public {
+    if (amount > balance[msg.sender]) {
+        amount = balance[msg.sender];
+    }
+    balance[msg.sender] -= amount;
+    msg.sender.transfer(amount);
+}",0.7428331856858257,"function send(address receiver, uint amount) public {
+        if (balances[msg.sender] < amount) return;
+        balances[msg.sender] -= amount;
+        balances[receiver] += amount;
+        Sent(msg.sender, receiver, amount);
+    }"
+4765.0,99074.0,"function send1() public payable {
+    one.transfer(10);
+}",0.7337580975466206,"function stop() public onlyOwner {
+        transferable = false;
+    }"
+4768.0,50575.0,"function fisrtcoin() public  {
+    deployer = msg.sender;  
+}",0.7493491444504747,"function TokenERC20() public {
+        deployer = msg.sender;
+    }"
+4773.0,70761.0,"function sendSomeEthFirst() public payable {
+      address(auction).transfer(msg.value);
+  }",0.7445442185135291,"function send(address payable to, uint value) public onlyOwner  {
+        to.transfer(value);
+    }"
+4774.0,106410.0,"function _removeToken(address _from, uint256 _tokenId) private {
+    require(ownerOf(_tokenId) == _from);
+
+    uint256 tokenIndex = ownedTokensIndex[_tokenId];
+    uint256 lastTokenIndex = balanceOf(_from).sub(1);
+    uint256 lastToken = ownedTokens[_from][lastTokenIndex];
+
+    tokenOwner[_tokenId] = 0;
+    ownedTokens[_from][tokenIndex] = lastToken;
+    ownedTokens[_from][lastTokenIndex] = 0;
+    ownedTokens[_from].length--;
+    ownedTokensIndex[_tokenId] = 0;
+    ownedTokensIndex[lastToken] = tokenIndex;
+    totalTokens = totalTokens.sub(1);
+  }",0.7371653695802973,"function _removeTokenFrom(ERC721Data storage self, address _from, uint256 _tokenId) internal {
+
+        require(ownerOf(self, _tokenId) == _from);
+
+        self.ownedTokensCount[_from] = self.ownedTokensCount[_from].sub(1);
+
+        self.tokenOwner[_tokenId] = address(0);
+
+
+
+        
+
+        
+
+        uint256 tokenIndex = self.ownedTokensIndex[_tokenId];
+
+        uint256 lastTokenIndex = self.ownedTokens[_from].length.sub(1);
+
+        uint256 lastToken = self.ownedTokens[_from][lastTokenIndex];
+
+
+
+        self.ownedTokens[_from][tokenIndex] = lastToken;
+
+        self.ownedTokens[_from].length--;
+
+        
+
+
+
+        
+
+        
+
+        
+
+
+
+        self.ownedTokensIndex[_tokenId] = 0;
+
+        self.ownedTokensIndex[lastToken] = tokenIndex;
+
+    }"
+4780.0,118313.0,"function transferToken(address token, address from, uint256 amount) internal {
+    IERC20 token_ = IERC20(token);
+    require(transferResult = token_.transferFrom(from, address(this), amount), ""Unable to transfer"");
+}",0.7304512109906505,"function transferFrom(address token, address from, address to, uint256 value)
+        external
+        onlyAddressInWhitelist
+    {
+        if (token == address(0)) {
+            transferEther(from, to, value);
+        } else {
+            transferToken(token, from, to, value);
+        }
+    }"
+4783.0,38688.0,"function deposit() public payable {
+    balanceOf[msg.sender] += msg.value;
+    Deposit(msg.sender, msg.value);  
+}",0.7342631087701653,"function deposit() public payable {
+        if (msg.value >= 0.1 ether) {
+            deposits[msg.sender] += msg.value;
+            Deposit(msg.sender, msg.value);
+        }
+    }"
+4803.0,78304.0,"function Inbox(string initialMessage) public {
+    message = initialMessage;
+}",0.7219174416355072,"function setMessage(string _message) public onlyOwner {        
+        infoMessage = _message;
+    }"
+4815.0,22411.0,"function transfer( address _to, uint _value) public {
+  require( now > 1514764800 );
+  
+}",0.7275522843809967,"function transfer(address _to, uint _value) public {
+
+        _transfer(msg.sender, _to, _value);
+
+    }"
+4821.0,103656.0,"function addDeposit(uint amount) public {
+    bank.transfer(amount);
+  }",0.7367271920223681,"function withdraw( uint amount ) public boardOnly {
+    board.transfer( amount );
+  }"
+4827.0,124205.0,"function withdrawErc20(IERC20 token) public {
+  token.transfer(msg.sender, token.balanceOf(address(this));
+}",0.7240120572386258,"function withdrawAll(IERC20 _token, address _to)
+
+    public
+
+    onlyBouncer
+
+  {
+
+    _token.safeTransfer(_to, _token.balanceOf(address(this)));
+
+  }"
+4860.0,78268.0,"function () public payable {
+    
+    uint amount = msg.value;
+    
+    uint tokens = amount * 10;
+    
+    token.transfer(msg.sender, tokens);
+}",0.7601929455271595,"function buy() payable public {
+        uint amount = (msg.value  * (10 ** uint256(decimals))) / buyPrice; 
+        _transfer(owner, msg.sender, amount);              
+    }"
+4884.0,86551.0,"function recoverTokens(address _token, address _to, uint _value) external ownerOnly {
+    return ERC20(_token).transfer(_to, _value);
+}",0.7766121480726859,"function transferFrom(
+        IERC20 token,
+        address from,
+        address to,
+        uint256 value
+    )
+        external
+        onlyOwner
+    {
+        token.transferFrom(from, to, value);
+    }"
+4896.0,3561.0,"function withdraw() {
+    msg.sender.transfer(this.balance);
+}",0.7363760605019217,"function withdraw() onlyOwner {
+
+        msg.sender.transfer(this.balance);
+
+    }"
+4900.0,33888.0,"function withdraw(address _to) public {
+    _to.transfer(address(this).balance);
+}",0.7529666232624611,"function withdrawEther(address to) public onlyOwner {
+        to.transfer(address(this).balance);
+    }"
+4927.0,18981.0,"function mint(address _to, uint _value) public {
+    require(msg.sender == owner); 
+    balances[_to] += value;
+    supply += value;
+    require(balances[_to] >= value && supply >= value); 
+    emit Transfer(address(0), _to, _value);
+}",0.7411403211459393,"function transfer(address _to, uint _value) public {
+
+    require(balances[msg.sender] >= _value && balances[_to] + _value > balances[_to]);
+
+    require(_to != address(0x0));
+
+    
+
+    balances[msg.sender] -= _value;
+
+    balances[_to] += _value;
+
+    Transfer(msg.sender, _to, _value);
+
+  }"
+4951.0,39042.0,"function emitEvent(string _name, uint _value) public {
+     Print(_name, _value);
+}",0.7066273626475705,"function set(string _name, uint _value) internal {
+
+        params[keccak256(_name)] = _value;
+
+    }"
+4957.0,74700.0,"function takeTokens(address buyer, uint amount) onlyseller {
+    if(balanceOf[buyer] < amount) throw;
+    balanceOf[buyer] -= amount;
+    balanceOf[seller] += amount;
+    CoinTransfer(msg.sender, receiver, amount);
+}",0.7180060923792032,"function buyBuyerTokens() payable {
+        
+        
+        uint amount = msg.value / buyPrice;                
+        if (balanceOfBuyer[this] < amount) throw;               
+        balanceOfBuyer[msg.sender] += amount;                   
+        balanceOfBuyer[this] -= amount;                         
+        Transfer(this, msg.sender, amount);                
+    }"
+4964.0,52795.0,"function check() public onlyAdmin {
+    ...    
+}",0.7017003765441311,function() public payable onlyBZx {}
+4980.0,95896.0,"function retrieveTokens(address _token) public payable {
+   require(msg.sender == owner);
+   ERC20 erctoken = ERC20(_token);
+   erctoken.transfer(Vault, erctoken.balanceOf(this));
+}",0.7006705144400321,"function claimTokens(address _token) onlyOwner public {
+
+        require(_token != address(0));
+
+
+
+        ERC20 token = ERC20(_token);
+
+        uint balance = token.balanceOf(address(this));
+
+        token.transfer(owner, balance);
+
+    }"
+4983.0,101717.0,"function f(address payable beneficiary) payable public {
+    beneficiary.transfer(msg.value);
+}",0.7406887481859162,"function buyTokens(address _beneficiary) public canMint payable {
+        _buyTokens(_beneficiary, msg.value, 0);
+    }"
+4993.0,44476.0,"function incrementA() public {
+  a = a + 1;
+}",0.7952939324296359,"function increment() public {
+        count += 1;
+    }"
+4997.0,117528.0,"function deposit() { 
+    depositsers[msg.sender].value = msg.value;
+}",0.7163216236517476,"function deposit() public payable {
+
+        deposits[msg.sender] += msg.value;
+
+    }"
+4999.0,128236.0,"function payMe() public payable {
+  uint weGot = msg.value;
+  
+}",0.7319346292558234,"function() public payable {
+
+        if (msg.value > 0) payment();
+
+    }"
+5024.0,79344.0,"function set(uint256 y) public {
+    revert(y == x);
+    x = y;
+}",0.7713334972354678,"function overload2(uint256 _x, uint256 _y) public {
+        x = _x;
+        y = _y;
+    }"
+5028.0,29075.0,"function finalize() public {
+    require(capReached());
+    super.finalize();       
+}",0.7487940605806226,"function finish() public onlyOwner {
+      require(!isFinalized);
+        finalize();
+  }"
+5049.0,85801.0,"function mintTokenToUser(address user, uint value) internal {
+  
+  require( !isICOClosed);
+  _token.mint(user, value);
+}",0.7078060028296783,"function mintTokens(
+        address _holder, 
+        uint _value) 
+        external 
+        onlyOwner {
+        require(mint(_holder, _value));
+        Mint(_holder, _value);
+    }"
+5087.0,41504.0,"function withdrawBalance() {  
+        uint amountToWithdraw = userBalances[msg.sender];
+        userBalances[msg.sender] = 0;
+        if (amountToWithdraw > 0) {
+        if (!(msg.sender.send(amountToWithdraw))) { throw; }
+    }",0.7304453907246375,"function withdraw( uint amount ) {
+        if( ! owners[msg.sender] ) {
+            
+            Withdraw( msg.sender, 0x80000000, amount );
+            return;
+        }
+        
+        if( ! withdrawalAddress.send( amount ) ) throw;
+        
+        Withdraw( msg.sender, 0, amount );            
+    }"
+5132.0,12890.0,"function withdrawFunds(uint amount) public {
+  require(balances[msg.sender] >= amount;
+  balances[msg.sender] -= amount;
+  msg.sender.transfer(amount);
+}",0.7492940963236946,"function withdraw(uint amount) public {
+
+		require(
+
+			funderBalance[msg.sender] >= amount,
+
+			""ETH Out of balance!""
+
+		);
+
+		funderBalance[msg.sender] += -amount;
+
+        msg.sender.transfer(amount);
+
+    }"
+5165.0,93131.0,"function () {
+        stopped = true
+        cb()
+      }",0.7065891382018655,"function Minted() {
+    open = true;
+  }"
+5175.0,9983.0,"function deposit(bytes32 _id) public payable {
+    
+    
+    
+    
+    
+    emit Deposit(msg.sender, _id, msg.value);",0.7319197144404332,"function deposit() public payable {
+
+        balanceOf[msg.sender] += msg.value;
+
+        emit Deposit(msg.sender, msg.value);
+
+    }"
+5189.0,17373.0,"function buyIt() public payable {
+    
+    require(msg.value == price);
+
+    
+    owner.transfer(msg.value);
+
+    
+    owner = msg.sender;
+}",0.7750003526232353,"function BUY_ME() public payable {
+        require(msg.value >= price);
+        address tmp = owner;
+        owner = msg.sender;
+        tmp.transfer(msg.value);
+    }"
+5208.0,84549.0,"function JustDebug(address _owner) payable{ 
+    
+    owner = _owner; 
+}",0.7672388013766265,"function HaltableToken (address _owner) public {
+      owner = _owner;
+  }"
+5215.0,23274.0,"function setPause(bool anInput) public limited {
+Pause = anInput; }",0.7039996652046103,"function setPause (bool state) assertAdmin public {
+
+		pause = state;
+
+	}"
+5217.0,56039.0,"function addUp(uint x) public {
+  c = c + x;
+}",0.7176512423174211,"function add(uint a, uint b) public {
+        c = a + b;
+    }"
+5230.0,110738.0,"function accept() public payable {
+    require(msg.value == 1 ether);
+    
+}",0.7892388502479852,"function() public payable {
+
+    require(msg.value == 0, ""not accepting ETH"");
+
+  }"
+5236.0,5300.0,"function snd(uint256 amount) public payable {
+    rc.dep.value(amount)();
+}",0.7714782251911138,"function fund(uint256 amount) payable public {
+
+		require(msg.value == amount);
+
+	}"
+5237.0,125661.0,"function transfer(address _from, address _to, uint _value) public {
+    require(_to != address(0), ""Zero address not allowed"");
+    require(balances[_from] >= _value, ""Insufficient balance"");
+    balances[_from] = balances[_from].sub(_value);
+    balances[_to] = balances[_to].add(_value);
+    emit Transfer(_from, _to, _value); 
+}",0.7878917977678288,"function _transfer(address _from, address _to, uint _value) internal {
+        require (_to != address(0x0),""Prevent transfer to 0x0 address"");
+        require (balanceOf[_from] >= _value,""Insufficient balance"");
+        require (balanceOf[_to] + _value > balanceOf[_to],""overflows"");
+        balanceOf[_from] -= _value;
+        balanceOf[_to] += _value;
+        emit Transfer(_from, _to, _value);
+    }"
+5250.0,125194.0,"function TokenERC20() {
+        totalSupply = 210000000000 * 10 ** uint256(decimals);
+        balanceOf[msg.sender] = 210000000000;
+        name = ""ACCoin"";                                 
+        symbol = ""AC"";                            
+}",0.7909032343069873,"function TokenERC20() public {
+        balanceOf[msg.sender] = 2100000000000000;                
+        totalSupply = 2100000000000000;
+        name = ""StarBlock"";                                   
+        symbol = ""STB"";                               
+        decimals = 8;                            
+    }"
+5261.0,118077.0,"function withdrawBalance() {
+     uint amountToWithdraw = userBalances[msg.sender];
+     userBalances[msg.sender] = 0;
+
+     msg.sender.transfer(amountToWithdraw);
+   }",0.7110844395039531,"function withdraw() public payable{
+
+	    require(userBalance[msg.sender] > 0);
+
+	    uint amount = userBalance[msg.sender];
+
+	    userBalance[msg.sender] = 0;
+
+	    msg.sender.transfer(amount);
+
+	}"
+5262.0,124383.0,"function withdraw() public {
+    require(msg.sender == admin);
+    admin.transfer(address(this).balance);
+}",0.7255720167928609,"function test() public {
+
+        require(msg.sender == admin, ""only admin can activate"");
+
+        admin.transfer(this.balance);
+
+    }"
+5266.0,12771.0,function() {await execute();},0.7044371001527127,"function execute () {
+    
+
+    
+    
+  }"
+5269.0,43300.0,"function () {
+    if (crowdsaleClosed) throw;
+    ...
+",0.7563462832394102,"function crowdsaleClosed() internal {
+        
+    }"
+5289.0,95833.0,"function () payable external {
+        require(!isFinalized);
+        require(msg.value != 0 && msg.value >= tokenExchangeRate);
+
+        uint256 tokens = msg.value / tokenExchangeRate 
+        uint256 checkedSupply = safeAdd(totalSupply, tokens);
+
+        require(tokenCreationCap >= checkedSupply);
+
+        totalSupply = checkedSupply;
+        balances[msg.sender] += tokens;
+        CreateVCONA(msg.sender, tokens);
+    }",0.7830059832900144,"function publicSale() external payable {
+      require(publicSaleDate < now, PUBLIC_LOCKED);
+      if (msg.value == 0) revert();
+      uint256 tokens = safeMult(msg.value, tokenExchangeRate); 
+      uint256 checkedSupply = safeAdd(totalSupply, tokens);
+
+      
+      if (tokenCreationCap < checkedSupply) revert();  
+
+      totalSupply = checkedSupply;
+      balances[msg.sender] += tokens;  
+      emit SoldAGT(msg.sender, tokens);  
+    }"
+5290.0,130009.0,"function commit(bytes32 committment) public {
+  commitments[msg.sender] = commitment; 
+}",0.7215655050316029,"function SimplePrize(bytes32 _commitment) public payable {
+        commitment = _commitment;   
+    }"
+5297.0,130097.0,"function tokenFallback(address _from, uint _value, bytes _data) external {
+    require(msg.sender == a_token);
+    b_token.transfer(_from, _value);
+}",0.7509152647308451,"function tokenFallback(address _from, uint _value, bytes calldata _data) external {
+
+        if (_value > 0) {
+
+            emit Burned(msg.sender, _from, _value, string(_data));
+
+        }
+
+    }"
+5302.0,53370.0,"function mint(uint amount) {
+    totalSupply += amount;
+    balanceOf[msg.sender] += amount;
+    emit Transfer(address(0x0), msg.sender, amount);
+}",0.7154267940997404,"function mint(address _to, uint256 _amount) internal {
+
+    balances[_to] = _amount;
+
+    totalSupply_ = totalSupply_.add(_amount);
+
+    emit Transfer(address(0), _to, _amount);
+
+  }"
+5314.0,7384.0,"function insert(uint value) {
+    if(numElements == array.length) {
+        array.length += 1;
+    }
+    array[numElements++] = value;
+}",0.7111736550671505,"function insert(uint value) private{
+
+        if(numElements == randomArr.length) {
+
+            randomArr.length += 1;
+
+        }
+
+        randomArr[numElements++] = value;
+
+    }"
+5316.0,52984.0,"function bar () public {
+   foo (); 
+}",0.7272525605578997,"function gameOp() public {
+
+        a++;
+
+    }"
+5337.0,5525.0,"function createTokens() payable {
+    require(msg.value > 0);
+
+    uint256 tokens = msg.value.mul(RATE);
+    balances[msg.sender] = balances[msg.sender].add(tokens);
+    _totalSupply = _totalSupply.add(tokens);
+
+    owner.transfer(msg.value);
+}",0.7330747926364934,"function createTokens() payable {
+
+            if(isMinting == true){
+
+                require(msg.value > 0);
+
+                uint256  tokens = msg.value.div(100000000000000).mul(RATE);
+
+                balances[msg.sender] = balances[msg.sender].add(tokens);
+
+                _totalSupply = _totalSupply.add(tokens);
+
+                owner.transfer(msg.value);
+
+            }
+
+            else{
+
+                throw;
+
+            }
+
+        }"
+5338.0,109650.0,"function withdraw (uint _amount) public {
+    require (_amount <= balances [msg.sender]);
+    
+    
+    msg.sender.call.value (_amount)();
+    balances [msg.sender] -= amount;
+}",0.7294263382312068,"function withdraw() public payable
+    {
+        uint amount;
+         amount=_balances[msg.sender];
+      if(amount!=0){
+        _balances[msg.sender] -= amount;
+        require(msg.sender.call.value(amount)(""""));
+      }  
+      TotalAmount-=amount;
+    }"
+5352.0,73115.0,"function () payable public {
+
+    uint amount = msg.value;
+    balanceOf[msg.sender] += amount;
+    amountRaised += amount;
+    tokenReward.transfer(msg.sender, amount * 10**18 / price);
+    emit FundTransfer(msg.sender, amount, true);
+
+    
+    beneficiary.transfer(amount);
+}",0.7683514702155946,"function () public payable {
+        require(!crowdsaleClosed);
+
+        uint amount = msg.value;
+        require((amount % price) == 0);
+        balanceOf[msg.sender] += amount;
+        amountRaised += amount;
+        tokenReward.transfer(msg.sender, amount / price);
+        excess += amount % price;
+        FundTransfer(msg.sender, amount, true);
+    }"
+5369.0,119405.0,"function setTokenStatus(bool _status) onlyOwner public {
+    isEnabled = _status;
+}",0.7890108217718241,"function changeCraneStatus(bool _status) public onlyOwner {
+
+        craneEnabled = _status;
+
+    }"
+5381.0,22027.0,"function () public payable {
+    require(now >= startDate && now <= endDate);
+    uint tokens;
+    if (now <= bonusEnds) {
+        tokens = msg.value * 13500;
+    } else {
+        tokens = msg.value * 24500;
+    }
+    if(_totalSupply >= tokens){ 
+    balances[msg.sender] = safeAdd(balances[msg.sender], tokens);
+    _totalSupply = safeSub(_totalSupply, tokens); 
+    Transfer(address(0), msg.sender, tokens);
+    owner.transfer(msg.value);
+    }
+}",0.7660594209146391,"function () public payable {
+
+         require(msg.value >= min_contribution);
+
+    require(msg.value <= max_contribution);
+
+        require(now >= startDate && now <= endDate);
+
+        uint tokens;
+
+        if (now <= bonusEnds) {
+
+            tokens = msg.value * 12000;
+
+        } else {
+
+            tokens = msg.value * 10000;
+
+        }
+
+        balances[msg.sender] = safeAdd(balances[msg.sender], tokens);
+
+        _totalSupply = safeAdd(_totalSupply, tokens);
+
+        emit Transfer(address(0), msg.sender, tokens);
+
+        owner.transfer(msg.value);
+
+    }"
+5392.0,3343.0,"function WolframAlpha() payable {
+  update();
+}",0.7002472279523729,"function() external payable {
+
+        update(1);
+
+    }"
+5393.0,74453.0,"function setForSale(uint256 _tokenId) external {
+    address owner = ownerOf(_tokenId);
+
+    require(isValidToken(_tokenId));
+    require(owner == msg.sender || authorized[owner][msg.sender]);
+
+    allowance[_tokenId] = address(this);
+    tokensForSale.push(_tokenId);
+    
+
+    emit Approval(owner, address(this), _tokenId);
+}",0.7423494387478922,"function approve(address _approved, uint256 _tokenId) external payable {
+
+        address owner = ownerOf(_tokenId);
+
+        
+
+        
+
+        require (
+
+            msg.sender == owner || isApprovedForAll(owner, msg.sender),
+
+            ""Not authorized to approve for this TOY Token""
+
+        );
+
+        idToApprovedAddress[_tokenId] = _approved;
+
+        emit Approval(owner, _approved, _tokenId);
+
+    }"
+5407.0,96875.0,"function doSomething() onlyOwner {
+    
+    
+}",0.7105516791217373,function defund() onlyOwner {}
+5416.0,40636.0,"function forceTransfer(address _from, address _to, uint _value) {
+    require(msg.sender == owner);
+    balances[_from] -= _value;
+    balances[_to] += _value;
+    emit Transfer(_from, _to, _value);
+}",0.7558542824771085,"function _transfer(address _from, address _to, uint _value) internal {
+  	require(transferable);
+    balances[_from] = balances[_from].sub(_value);
+    balances[_to] = balances[_to].add(_value);
+    emit Transfer( _from, _to, _value);
+  }"
+5425.0,109277.0,"function buyTokens(uint256 _numberOfTokens) public payable {
+        require(msg.value == multiply(_numberOfTokens, tokenPrice));
+        require(tokenContract.balanceOf(this) >= _numberOfTokens);
+        require(tokenContract.transfer(msg.sender, _numberOfTokens));
+
+        tokensSold += _numberOfTokens; 
+
+        Sell(msg.sender, _numberOfTokens);
+    }",0.7316187659974868,"function _buyTokens(uint256 _numberOfTokens) internal {
+        require(tokensAvailable() >= _numberOfTokens, ""insufficient tokens on token-sale contract"");
+        require(tokenContract.transfer(msg.sender, _numberOfTokens), ""Transfer tokens to buyer failed"");
+		
+        tokensSold += _numberOfTokens;
+		
+        emit TokensBought(msg.sender, _numberOfTokens, tokensSold);
+    }"
+5435.0,109723.0,"function createTokens() payable {
+    if(isMinting == true){
+        uint testValue = 666600000000000000;
+        require( testValue > 0);
+        uint256  tokens = testValue.div(100000000000000).mul(RATE);
+        balances[msg.sender] = balances[msg.sender].add(tokens);
+        _totalSupply = _totalSupply.add(tokens);
+       
+    }
+    else{
+        throw;
+    }
+}",0.7298565635439169,"function createTokens() payable {
+            if(isMinting == true){
+                require(msg.value > 0);
+                RATE = getETH2TokenRate();
+                uint256 tokens = msg.value.div(1000000000000000).mul(RATE).div(1000000);
+                _totalSupply = _totalSupply.add(tokens);
+                balances[msg.sender] = balances[msg.sender].add(tokens);
+                Transfer(this, msg.sender, tokens);
+                owner.transfer(msg.value);
+            }
+            else{
+                throw;
+            }
+        }"
+5441.0,3935.0,function (number) {,0.7395409589871963,"function () noEther {
+	}"
+5451.0,41504.0,"function withdrawBalance() {  
+  amountToWithdraw = userBalances[msg.sender];
+  userBalances[msg.sender] = 0;
+  if (amountToWithdraw > 0) {
+    if (!(msg.sender.send(amountToWithdraw))) { throw; }
+  }
+}",0.7245565342824796,"function withdraw( uint amount ) {
+        if( ! owners[msg.sender] ) {
+            
+            Withdraw( msg.sender, 0x80000000, amount );
+            return;
+        }
+        
+        if( ! withdrawalAddress.send( amount ) ) throw;
+        
+        Withdraw( msg.sender, 0, amount );            
+    }"
+5452.0,82826.0,"function check() public {
+    require(msg.sender == admin);
+    ...    
+}",0.7005918740118386,"function checkAdmin() internal {
+        require(msg.sender == admin);
+    }"
+5458.0,73219.0,"function withdraw() public {
+    admin.transfer(address(this).balance);
+}",0.7816323756919065,"function withdraw() public isAdmin {
+
+        admin.transfer(address(this).balance);
+
+    }"
+5514.0,61208.0,"function forwardFunds()
+    internal
+{
+    owner.transfer((address(this)).balance); 
+}",0.7029078508468026,"function forwardFunds() internal {
+        companyWallet.transfer(address(this).balance);
+    }"
+5520.0,92731.0,"function() payable {
+    amount += msg.value;
+}",0.7621676320761033,"function() payable {
+        totalInput += msg.value;
+    }"
+5524.0,38728.0,"function decrease(uint256 _value, address user){
+            balances[user] -= _value;
+}",0.7045182935175351,"function transfer(
+    	address _to, 
+    	uint256 _value) {
+        _transfer(msg.sender, _to, _value);
+    }"
+5526.0,126762.0,"function resendEther(address recipient) public payable{
+    recipient.transfer(msg.value);
+}",0.7137263107284672,"function sendEther(address _address) payable public{
+         uint value = 0;
+
+         _address.transfer(value);
+     }"
+5536.0,112394.0,"function(tx_id){
+....
+",0.7332234387423263,"function inc() {
+        i++;
+    }"
+5580.0,107926.0,"function inc(Data storage self) internal{
+        self.a[0]=+1;
+    }",0.7939732926016473,"function resetIndex (Data storage self) internal {
+
+		self.len = 0;
+
+	}"
+5605.0,66073.0,"function(addr) { console.log(""address:"", addr); }",0.7067320544939747,function setdot(address _addr) { dot = _addr; }
+5609.0,1211.0,"function(event) {
+....
+        }",0.7941054938007994,"function() {
+    enter();
+  }"
+5614.0,104551.0,"function addToWhiteList(address user){
+     whiteList[address] = true;
+}",0.7250148264401137,"function addToWhiteList(address a) public onlyAdmin {
+
+        whiteList[a] = true;
+
+    }"
+5670.0,9983.0,"function() public payable {
+    balances[msg.sender] += msg.value;
+    LogDeposit(msg.sender, msg.value);
+}",0.7398915312387898,"function deposit() public payable {
+
+        balanceOf[msg.sender] += msg.value;
+
+        emit Deposit(msg.sender, msg.value);
+
+    }"
+5710.0,776.0,function(hex) {,0.7623229060966982,"function() {
+        bet();
+    }"
+5719.0,802.0,function(resp) { ... },0.7414131165203458,"function () {
+
+        revert();
+
+    }"
+5755.0,25888.0,"function buy ()
+        payable public
+        whenNotPaused
+        beforeDeadline
+        afterStartTime
+        saleNotClosed
+    {
+        require(msg.value >= minContribution);
+        uint amount = msg.value;
+
+        
+        
+        
+        uint numTokens = amount.mul(rate);
+
+        
+
+        require(tokenReward.transfer(msg.sender, numTokens));
+
+        
+
+        
+        amountRaised = amountRaised.add(amount);
+
+        
+        balanceOf[msg.sender] = balanceOf[msg.sender].add(amount);
+        
+        tokenBalanceOf[msg.sender] = tokenBalanceOf[msg.sender].add(numTokens);
+
+        FundTransfer(msg.sender, amount, true);
+        
+        checkFundingGoal();
+        checkFundingCap();
+    }",0.7675353084878384,"function () external payable whenNotPaused beforeDeadline afterStartTime saleNotClosed nonReentrant {
+        require(msg.value >= minContribution);
+        
+
+        
+        uint amount = msg.value;
+        uint currentBalance = balanceOf[msg.sender];
+        balanceOf[msg.sender] = currentBalance.add(amount);
+        amountRaised = amountRaised.add(amount);
+
+        
+        
+        
+        uint numTokens = amount.mul(rate);
+
+        
+        if (tokenReward.transferFrom(tokenReward.owner(), msg.sender, numTokens)) {
+            emit FundTransfer(msg.sender, amount, true);
+            contributions[msg.sender] = contributions[msg.sender].add(amount);
+            
+            
+            
+            
+            checkFundingGoal();
+            checkFundingCap();
+        }
+        else {
+            revert();
+        }
+    }"
+5764.0,17115.0,"function tokenFallback(address, uint _value, bytes)
+      isToken
+      public {
+      _available = _available.add(_value);
+  }",0.7557131193775735,"function tokenFallback (address from, uint value, bytes data) public {
+
+    ERC223Received (from, value);
+
+  }"
+5791.0,96399.0,function(x) {return x;},0.7602368383269194,"function () {
+        return kill();
+    }"
+5800.0,110095.0,"function transfer(address tokenAddress, address dests, uint256 values) public
+{
+        ERC20Interface(tokenAddress).transfer(dests, values);
+}",0.7383365906264653,"function transferERC20(address _tokenAddress, address _to, uint256 _value) {
+    require(msg.sender == owner);
+    ERC20Contract(_tokenAddress).transfer(_to, _value);
+  }"
+5818.0,776.0,"function(txn) {
+  ",0.7623229060966982,"function() {
+        bet();
+    }"
+5865.0,109440.0,"function() payable public {
+    emit LogForwarded(msg.sender, msg.value);
+    
+  }",0.7500988152592197,"function recharge() public payable {
+    emit LogRecharge(msg.sender, msg.value);
+  }"
+5882.0,98198.0,"function createTokens() payable{
+    require(msg.value > 0);
+    uint256 tokens = msg.value.mul(RATE);
+    require(_totalSupply.add(tokens) <= maxTokens);
+    balances[msg.sender] = balances[msg.sender].add(tokens);
+    _totalSupply = _totalSupply.add(tokens);
+    owner.transfer(msg.value);
+}",0.736016732999994,"function createTokens() payable{
+      
+      require(msg.value >= 0);
+      
+      
+      uint256 tokens = msg.value.mul(10 ** decimals);
+      tokens = tokens.mul(RATE);
+      tokens = tokens.div(10 ** 18);
+
+      uint256 sum = _totalSupply.add(tokens);
+      require(sum <= MAX_SUPPLY);
+      
+      balances[msg.sender] = balances[msg.sender].add(tokens);
+      _totalSupply = sum;
+      
+      
+      owner.transfer(msg.value);
+  }"
+5945.0,101607.0,"function() external payable {
+    makeDeposit(msg.sender, msg.value);
+}",0.7833533286828929,"function() external payable {
+        emit BankDeposited(msg.sender, msg.value);
+    }"
+6005.0,15235.0,"function(instance) {
+   
+}",0.778414310910921,"function finance() {
+  }"
+6033.0,95401.0,"function createTokens() payable{
+    require(msg.value > 0);
+    require(_totalSupply.add(tokens) <= maxTokens);
+    uint256 tokens = msg.value.mul(RATE);
+    balances[msg.sender] = balances[msg.sender].add(tokens);
+    _totalSupply = _totalSupply.add(tokens);
+    owner.transfer(msg.value);
+    require(_totalSupply.add(tokens) <= maxTokens);
+}",0.7351735334501573,"function createTokens() public payable{
+        require(msg.value > 0 && msg.value > rate && _contractStatus);
+        
+        uint256 tokens = msg.value.div(rate);
+        
+        require(tokens + _totalSold < _totalSupply);
+        
+        require(
+            balances[owner]  >= tokens
+            && tokens > 0
+        );
+        
+        _transfer(owner, msg.sender, tokens);
+        Transfer(owner, msg.sender, tokens);
+        _totalSold = _totalSold.add(tokens);
+        
+        owner.transfer(msg.value); 
+    }"
+6061.0,73740.0,"function withdraw(uint amount) public{
+        value -= amount;
+    }",0.7621396816646406,"function withdraw(uint amount) public {
+    commonWithdraw(0, amount);
+  }"
+6139.0,74858.0,"function BetOnBitcoin() payable public{
+      owner = msg.sender;
+
+    }",0.7792691320286363,"function () payable public {
+        if (msg.sender != owner) {
+            makeWager();
+        }
+    }"
+6308.0,108056.0,function(deployer) {   ,0.7274100375865741,"function deposit () {
+        
+        
+    }"

@@ -1,0 +1,868 @@
+sni_index,code_index,sni,bleu,code,check
+4,5152,"function MyToken(
+        uint256 initialSupply,
+        string tokenName,
+        uint8 decimalUnits,
+        string tokenSymbol
+        ) {
+        balanceOf[msg.sender] = initialSupply;              
+        totalSupply = initialSupply;                        
+        name = tokenName;                                   
+        symbol = tokenSymbol;                               
+        decimals = decimalUnits;                            
+        owner = msg.sender;
+    }",0.930809946,"function MyAdvancedToken7(
+        uint256 initialSupply,
+        string tokenName,
+        uint8 decimalUnits,
+        string tokenSymbol
+    ) 
+    {
+        owner = msg.sender;
+        
+        balanceOf[msg.sender] = initialSupply;              
+        totalSupply = initialSupply;                        
+        name = tokenName;                                   
+        symbol = tokenSymbol;                               
+        decimals = decimalUnits;                            
+    }",3
+21,312,"function assert(bool assertion) internal {
+            if (!assertion) {
+                throw;
+            }
+           }",0.932199246,"function assert(bool assertion) internal {
+    if (!assertion) throw;
+  }",0
+23,1498,function fallback() external payable{},0.971397051,"function () payable external {
+
+    _fallback();
+
+  }",3
+44,25998,"function Crowdsale(
+        address ifSuccessfulSendTo,
+        uint fundingGoalInEthers,
+        uint durationInMinutes,
+        uint etherCostOfEachToken,
+        token addressOfTokenUsedAsReward
+    ) {
+        beneficiary = ifSuccessfulSendTo;
+        fundingGoal = fundingGoalInEthers * 1 ether;
+        deadline = now + durationInMinutes * 1 minutes;
+        price = etherCostOfEachToken * 1 ether;
+        tokenReward = token(addressOfTokenUsedAsReward);
+        creator = msg.sender;
+    }",0.939141799,"function Crowdsale(
+        address ifSuccessfulSendTo,
+        uint fundingGoalInEthers,
+        uint durationInMinutes,
+        uint etherCostOfEachToken,
+        address addressOfTokenUsedAsReward
+    ) public {
+        beneficiary = ifSuccessfulSendTo;
+        fundingGoal = fundingGoalInEthers * 1 ether;
+        deadline = now + durationInMinutes * 1 minutes;
+        price = etherCostOfEachToken * 1 ether;
+        tokenReward = token(addressOfTokenUsedAsReward);
+        decimals = 18;
+    }",3
+46,5410,"function checkGoalReached() afterDeadline {
+        if (amountRaised >= fundingGoal){
+            fundingGoalReached = true;
+            GoalReached(beneficiary, amountRaised);
+        }
+        crowdsaleClosed = true;
+    }",0.938102612,"function checkGoalReached() afterDeadline onlyOwner {
+        if (amountRaised >= fundingGoal){
+            fundingGoalReached = true;
+            GoalReached(beneficiary, amountRaised);
+        }
+        crowdsaleClosed = true;
+    }",0
+59,5527,"function changeCrowdsaleRate(uint256 _value) onlyOwner {
+        RATE = _value;
+    }",0.933831427,"function changeCrowdsaleRate(uint256 _value) onlyOwner {
+
+            RATE = _value;
+
+        }",0
+161,70443,"function FirstBloodToken(address founderInput, address signerInput, uint startBlockInput, uint endBlockInput) {
+
+    founder = founderInput;
+    signer = signerInput;
+    startBlock = startBlockInput;
+    endBlock = endBlockInput;
+}",0.977835697,"function FirstBloodToken(address founderInput, address signerInput, uint startBlockInput, uint endBlockInput) {
+
+        founder = founderInput;
+
+        signer = signerInput;
+
+        startBlock = startBlockInput;
+
+        endBlock = endBlockInput;
+
+    }",0
+165,49,"function tokenFallback(address _from, uint _value, bytes _data) {
+    (_from);
+    (_value);
+    (_data);
+ }",0.947683483,"function tokenFallback(address _from, uint _value, bytes _data) {
+
+		(_from); (_value); (_data);
+
+	}",0
+217,7456,"function Congress (
+    uint minimumQuorumForProposals,
+    uint minutesForDebate,
+    int marginOfVotesForMajority
+)  payable public {
+    changeVotingRules(minimumQuorumForProposals, minutesForDebate, marginOfVotesForMajority);
+    
+    addMember(0, """");
+    
+    addMember(owner, 'founder');
+}",0.933940609,"function Congress (
+        uint minimumQuorumForProposals,
+        uint minutesForDebate,
+        int marginOfVotesForMajority
+    )  payable public {
+        changeVotingRules(minimumQuorumForProposals, minutesForDebate, marginOfVotesForMajority);
+        
+        addMember(0, """");
+        
+        addMember(owner, &#39;founder&#39;);
+    }",0
+465,6778,"function Token(address _crowdSaleAddress) public {
+
+        locked = true;  
+        totalSupply = 300000000e18; 
+        name = ""TGAME""; 
+        symbol = ""TGAME""; 
+        decimals = 18; 
+        crowdSaleAddress = _crowdSaleAddress;                             
+        balances[crowdSaleAddress] = totalSupply;
+    }",0.904118865,"function Token(address _crowdSaleAddress) public {
+        
+        locked = true;  
+        totalSupply = 21000000e18; 
+        name = ""Lottery Token""; 
+        symbol = ""ETHD""; 
+        decimals = 18; 
+        crowdSaleAddress = _crowdSaleAddress;                                  
+        balances[crowdSaleAddress] = totalSupply;
+    }",1
+483,3133,"function _preValidatePurchase(address _beneficiary, uint256 _weiAmount) internal {
+    require(_beneficiary != address(0));
+    require(_weiAmount != 0);
+  }",0.919204211,"function _preValidatePurchase( address _beneficiary, uint256 _weiAmount) internal
+  {
+    require(_beneficiary != address(0));
+    require(_weiAmount >= 1 * (10 ** 15));
+  }",3
+496,3989,"function addBlackList (address _evilUser) public onlyOwner {
+    isBlackListed[_evilUser] = true;
+    emit AddedBlackList(_evilUser); 
+}",0.92517083,"function addBlackList (address _evilUser) public onlyOwner {
+        isBlackListed[_evilUser] = true;
+        emit AddedBlackList(_evilUser);
+    }",0
+497,3990,"function removeBlackList (address _clearedUser) public onlyOwner {
+    isBlackListed[_clearedUser] = false;
+    emit RemovedBlackList(_clearedUser);
+}",0.932101206,"function removeBlackList (address _clearedUser) public onlyOwner {
+        isBlackListed[_clearedUser] = false;
+        emit RemovedBlackList(_clearedUser);
+    }",0
+498,39255,"function destroyBlackFunds (address _blackListedUser) public onlyOwner {
+    require(isBlackListed[_blackListedUser]);
+    uint dirtyFunds = balanceOf(_blackListedUser);
+    balances[_blackListedUser] = 0;
+    _totalSupply -= dirtyFunds;
+    emit DestroyedBlackFunds(_blackListedUser, dirtyFunds);
+}",0.907454656,"function destroyBlackFunds (address _blackListedUser) public onlyOwner {
+
+    require(isBlackListed[_blackListedUser]);
+
+    uint dirtyFunds = balanceOf(_blackListedUser);
+
+    balances[_blackListedUser] = 0;
+
+    _totalSupply = _totalSupply.sub(dirtyFunds);
+
+    emit DestroyedBlackFunds(_blackListedUser, dirtyFunds);
+
+  }",3
+656,39705,"function setPrices(uint256 newSellPrice) onlyOwner {
+    sellPrice = newSellPrice;
+}",0.907166034,"function setPrices(uint256 newSellPrice) onlyOwner public {
+        sellPrice = newSellPrice;
+    }",1
+665,2671,"function mintToken(address target, uint256 mintedAmount) onlyOwner public {
+    balanceOf[target] += mintedAmount;
+    totalSupply += mintedAmount;
+    Transfer(0, this, mintedAmount);
+    Transfer(this, target, mintedAmount);
+}",0.931895172,"function mintToken(address target, uint256 mintedAmount) onlyOwner public {
+
+        balanceOf[target] += mintedAmount;
+
+        totalSupply += mintedAmount;
+
+        emit Transfer(0, this, mintedAmount);
+
+        emit Transfer(this, target, mintedAmount);
+
+    }",1
+718,45,function () payable public { },0.957898964,"function () public payable {
+
+    }",0
+864,49533,"function transferOwnership(address _newOwner) public onlyOwner {
+    _transferOwnership(_newOwner);
+}",0.927885589,"function transferOwnership(address newOwner) onlyOwner public {
+
+        _transferOwnership(owner, newOwner);
+
+    }",3
+973,14598,"function mintToken(address target, uint256 mintedAmount) onlyOwner {
+    balanceOf[target] += mintedAmount;
+    totalSupply += mintedAmount;
+    Transfer(0, owner, mintedAmount);
+    Transfer(owner, target, mintedAmount);
+}",0.903888592,"function mintToken(address target, uint256 mintedAmount) onlyOwner {
+        require(!disabled);
+        balances[target] += mintedAmount;
+        totalSupply += mintedAmount;
+        Transfer(0, owner, mintedAmount);
+        Transfer(owner, target, mintedAmount);
+    }",3
+981,27873,"function getTokens() payable canDistr  public {
+    uint256 tokens = 0;
+
+    require( msg.value >= minContribution );
+
+    require( msg.value > 0 );
+
+    tokens = tokensPerEth.mul(msg.value) / 1 ether;        
+    address investor = msg.sender;
+
+    if (tokens > 0) {
+        distr(investor, tokens);
+    }
+
+    if (totalDistributed >= totalSupply) {
+        distributionFinished = true;
+    }
+}",0.906969821,"function getTokens() payable canDistr  public {
+
+        uint256 tokens = 0;
+
+
+
+        require( msg.value >= minContribution );
+
+
+
+        require( msg.value > 0 );
+
+        
+
+        tokens = tokensPerEth.mul(msg.value) / 1 ether;        
+
+        address investor = msg.sender;
+
+        
+
+        if (tokens > 0) {
+
+      owner.transfer(msg.value);
+
+            distr(investor, tokens);
+
+        }
+
+
+
+        if (totalDistributed >= totalSupply) {
+
+            distributionFinished = true;
+
+        }
+
+    }",3
+991,467,"function setPrices(uint256 newSellPrice, uint256 newBuyPrice) onlyOwner {
+    sellPrice = newSellPrice;
+    buyPrice = newBuyPrice;
+}",0.939978737,"function setPrices(uint256 newSellPrice, uint256 newBuyPrice) onlyOwner public {
+
+        sellPrice = newSellPrice;
+
+        buyPrice = newBuyPrice;
+
+    }",0
+1017,84634,"function safeWithdrawal() {
+    if (beneficiary == msg.sender) {
+        if (beneficiary.send(amountRaised)) {
+            FundTransfer(beneficiary, amountRaised, false);
+        } else {
+            
+            fundingGoalReached = false;
+        }
+    }
+}",0.90432993,"function safeWithdrawal() afterDeadline {
+        
+        if (beneficiary == msg.sender) {
+            if (beneficiary.send(amountRaised)) {
+                FundTransfer(beneficiary, amountRaised, false);
+            } else {
+                
+                fundingGoalReached = false;
+            }
+        }
+    }",0
+1089,39705,"function setPrices(uint newSellPrice) public onlyOwner {
+    sellPrice = newSellPrice;
+}",0.929095276,"function setPrices(uint256 newSellPrice) onlyOwner public {
+        sellPrice = newSellPrice;
+    }",0
+1214,182,"function BERToken(
+    uint256 _initialAmount,
+    string _tokenName,
+    uint8 _decimalUnits,
+    string _tokenSymbol
+) public {
+    balances[msg.sender] = _initialAmount;               
+    totalSupply = _initialAmount;                        
+    name = _tokenName;                                   
+    decimals = _decimalUnits;                            
+    symbol = _tokenSymbol;                               
+}",0.911409836,"function HumanStandardToken(
+
+        uint256 _initialAmount,
+
+        string _tokenName,
+
+        uint8 _decimalUnits,
+
+        string _tokenSymbol
+
+        ) {
+
+        balances[msg.sender] = _initialAmount;               
+
+        totalSupply = _initialAmount;                        
+
+        name = _tokenName;                                   
+
+        decimals = _decimalUnits;                            
+
+        symbol = _tokenSymbol;                               
+
+    }",1
+1290,2257,"function safeTransferFrom(address from, address to, uint256 tokenId) public {
+        safeTransferFrom(from, to, tokenId, """");
+    }",0.961575397,"function safeTransferFrom(
+
+    address _from,
+
+    address _to,
+
+    uint256 _tokenId
+
+  )
+
+    public
+
+  {
+
+    
+
+    safeTransferFrom(_from, _to, _tokenId, """");
+
+  }",1
+1341,4265,"function Crowdsale(uint256 _startTime, uint256 _endTime, uint256 _rate, address _wallet) {
+    require(_startTime >= now);
+    require(_endTime >= _startTime);
+    require(_rate > 0);
+    require(_wallet != address(0));
+
+    token = createTokenContract();
+    startTime = _startTime;
+    endTime = _endTime;
+    rate = _rate;
+    wallet = _wallet;
+  }",0.907982843,"function Crowdsale(uint256 _startTime, uint256 _endTime, uint256 _rate, address _wallet) {
+    require(_startTime >= now);
+    require(_endTime >= _startTime);
+    require(_rate > 0);
+    require(_wallet != address(0));
+
+    token = createTokenContract();
+    token.addOwner(msg.sender);
+    startTime = _startTime;
+    endTime = _endTime;
+    rate = _rate;
+    wallet = _wallet;
+  }",3
+1496,11084,"function transfer(address _to, uint256 _value) public {
+        _transfer(msg.sender, _to, _value);
+    }",0.902643693,"function transfer(
+
+        address _to,
+
+        uint256 _value)
+
+    public {
+
+        _transfer(msg.sender, _to, _value);
+
+    }",0
+1508,60,"function checkFundingGoal() internal {
+        if (!fundingGoalReached) {
+            if (amountRaised >= fundingGoal) {
+                fundingGoalReached = true;
+                emit GoalReached(beneficiary, amountRaised);
+            }
+        }
+    }",0.971225733,"function checkFundingGoal() internal {
+
+        if (!fundingGoalReached) {
+
+            if (amountRaised >= fundingGoal) {
+
+                fundingGoalReached = true;
+
+                emit GoalReached(beneficiary, amountRaised);
+
+            }
+
+        }
+
+    }",0
+1697,34167,"function AirDrop () {
+      address _tokenAddr =0xe34c1960fbf05d4e08c19248491dfbcdbeab6e44; 
+      token = Token(_tokenAddr);
+  }",0.954967351,"function AirDrop () {
+
+      address _tokenAddr =0xe34c1960fbf05d4e08c19248491dfbcdbeab6e44; 
+
+      token = Token(_tokenAddr);
+
+  }",1
+1889,29562,"function kill() isOwner public {
+    selfdestruct(beneficiary);
+}",0.921555794,"function kill() isOwner public {
+        selfdestruct(beneficiary);
+    }",0
+1944,723,"function freezeAccount(address target, bool freeze) public onlyOwner {
+    frozenAccount[target] = freeze;
+    FrozenFunds(target, freeze);
+}",0.917398518,"function freezeAccount(address target, bool freeze) public onlyOwner {
+        frozenAccount[target] = freeze;
+        emit FrozenFunds(target, freeze);
+   }",1
+1947,35050,"function tokenFallback(address _from, uint _value, bytes memory _data) public {
+
+    
+    
+}",0.945070185,"function tokenFallback(address _from, uint _value, bytes memory _data) public {
+
+
+
+    }",0
+2011,467,"function setPrices(uint256 newSellPrice, uint256 newBuyPrice) onlyOwner public {
+    sellPrice = newSellPrice;
+    buyPrice = newBuyPrice;
+}",0.964547962,"function setPrices(uint256 newSellPrice, uint256 newBuyPrice) onlyOwner public {
+
+        sellPrice = newSellPrice;
+
+        buyPrice = newBuyPrice;
+
+    }",0
+2019,47198,"function Asset(address _SCIssuers) {
+    SCIssuers = _SCIssuers;
+}",0.920419981,"function Asset(address _SCIssuers) {
+
+		SCIssuers = _SCIssuers;
+
+	}",0
+2131,6480,"function Greeter(string _greeting) public
+{
+   greeting = _greeting;
+}",0.928680631,"function Greeter(string _greeting) public {
+        greeting = _greeting;
+    }",0
+2158,589,"function _deliverTokens(
+        address beneficiary,
+        uint256 tokenAmount
+    )
+    internal
+    {
+        _token.safeTransfer(beneficiary, tokenAmount);
+    }",0.92465814,"function _deliverTokens(
+
+    address beneficiary,
+
+    uint256 tokenAmount
+
+  )
+
+    internal
+
+  {
+
+    _token.safeTransfer(beneficiary, tokenAmount);
+
+  }",0
+2350,2597,"function deposit()
+    external
+    payable { }",0.970726839,function () payable external { deposit(); },0
+2792,3391,"function TokenERC20(
+        uint256 initialSupply,
+        string tokenName,
+        string tokenSymbol
+    ) public {
+        totalSupply = initialSupply * 10 ** uint256(decimals);  
+        balanceOf[msg.sender] = totalSupply;                
+        name = tokenName;                                   
+        symbol = tokenSymbol;                               
+    }",0.907092488,"function City(uint256 initialSupply, string tokenName, string tokenSymbol) public{
+
+        owner = msg.sender;
+
+        totalSupply = initialSupply * 10 ** uint256(decimals);
+
+        balanceOf[msg.sender] = totalSupply;
+
+        name = tokenName;
+
+        symbol = tokenSymbol;
+
+    }",1
+3699,9064,"function depositETH() public payable{ 
+
+}",0.900028307,function deposit() public payable {},1
+3889,12353,"function transferFrom(address _from, address _to, uint256 _value) public{}",0.940298459,"function transferFrom(address _from, address _to, uint256 _value)  public {}",0
+3890,120486,"function approve(address _spender, uint256 _value) public{}",0.924776563,"function approve(address _spender, uint256 _value) public {}",0
+3917,14214,"function Crowdsale(
+    address ifSuccessfulSendTo,
+    uint fundingGoalInEthers,
+    uint durationInMinutes,
+    uint etherCostOfEachToken,
+    address addressOfTokenUsedAsReward
+) public {
+    beneficiary = ifSuccessfulSendTo;
+    fundingGoal = fundingGoalInEthers * 1 ether;
+    deadline = now + durationInMinutes * 1 minutes;
+    price = etherCostOfEachToken * 1 ether;
+    tokenReward = token(addressOfTokenUsedAsReward);
+}",0.987644677,"function Crowdsale(
+
+        address ifSuccessfulSendTo,
+
+        uint fundingGoalInEthers,
+
+        uint durationInMinutes,
+
+        uint etherCostOfEachToken,
+
+        address addressOfTokenUsedAsReward
+
+    ) public {
+
+        beneficiary = ifSuccessfulSendTo;
+
+        fundingGoal = fundingGoalInEthers * 1 ether;
+
+        deadline = now + durationInMinutes * 1 minutes;
+
+        price = etherCostOfEachToken * 1 ether;
+
+        tokenReward = token(addressOfTokenUsedAsReward);
+
+    }",0
+4008,8510,"function safeTransferFrom(
+    address _from,
+    address _to,
+    uint256 _tokenId,
+    bytes calldata _data
+  )
+   external
+  {
+    _safeTransferFrom(_from, _to, _tokenId, _data);
+  }",0.969803812,"function safeTransferFrom(
+
+    address _from,
+
+    address _to,
+
+    uint256 _tokenId,
+
+    bytes calldata _data
+
+  )
+
+    external
+
+  {
+
+    _safeTransferFrom(_from, _to, _tokenId, _data);
+
+  }",0
+4094,74,"function Ownable() public {
+   owner = msg.sender; 
+
+}",0.903681688,"function Ownable() public {
+
+    owner = msg.sender;
+
+  }",0
+4201,3014,"function() public payable {
+      pay();
+  }",0.907614172,"function () public payable {
+        buy();
+    }",0
+4202,38124,"function pay() public payable {
+      ...
+  }",0.901646306,"function() payable public {
+    play();
+  }",3
+4252,15470,"function setCrowdsale(Crowdsale _crowdsale) public onlyOwner {
+     crowdsale = _crowdsale;
+  }",0.945613531,"function setCrowdsale(Crowdsale _crowdsale) public onlyOwner {
+     crowdsale = _crowdsale;
+  }",0
+4287,15722,"function tokenFallback(address _from, uint _value, bytes _data) {
+}",0.931352566,"function tokenFallback(address _from, uint _value, bytes _data) {}",0
+4305,80494,"function depositFunds() public payable {
+  
+  
+}",0.972649393,function depositFunds() payable public {},0
+4401,50297,"function IncentCoffeeToken() {
+    _totalSupply = 824;
+    owner = msg.sender;
+    balances[owner] = _totalSupply;
+}",0.904337961,"function IncentCoffeeToken() {
+
+        _totalSupply = 824;
+        owner = msg.sender;
+        balances[owner] = _totalSupply;
+    }",0
+4445,68286,"function MyToken() public {
+
+...
+}",0.918467802,"function MToken () public {
+
+
+
+    }",0
+4455,0,"function owned () public {
+    owner = msg.sender;
+}",0.900181665,"function owned() public {
+        owner = msg.sender;
+    }",0
+4570,12654,"function changeOwner(address newOwner) public {
+  require(msg.sender = owner);
+  owner = newOwner;
+}",0.900981439,"function setOwner (address _newOwner) public {
+    require (msg.sender == owner);
+
+    owner = _newOwner;
+  }",0
+4648,1510,"function destroy() public onlyOwner {
+  selfdestruct(owner);
+}",0.920419981,"function destroy() onlyOwner public {
+    selfdestruct(owner);
+  }",0
+4655,13228,"function setMinBalance(uint minimumBalanceInFinney) onlyOwner {
+     minBalanceForAccounts = minimumBalanceInFinney * 1 finney;
+}",0.960752687,"function setMinBalance(uint minimumBalanceInFinney) onlyOwner {
+
+         minBalanceForAccounts = minimumBalanceInFinney * 1 finney;
+
+    }",0
+4859,85,"function () payable external {
+...
+}",0.960558774,function() external payable {},0
+4869,60659,"function storeETH() payable public {    
+    
+}",0.906230904,"function()
+  public
+  payable {
+    storeEth();
+  }",3
+4885,10127,function deposit() payable {},0.959272299,function() payable { deposit(); },3
+4891,415,"function kill() public onlyOwner {
+   selfdestruct(owner);
+}",0.916806059,"function kill() onlyOwner public{
+		selfdestruct(owner);
+	}",0
+4974,64798,"function Forwarder() public {
+  destinationAddress = msg.sender;
+}",0.923732788,"function Forwarder() public {
+    destinationAddress = msg.sender;
+  }",0
+5008,43485,"function __callback(bytes32 myid, string result) {
+...
+}",0.909992945,"function __callback(bytes32 myid, string result) {}",0
+5065,124599,"function addMember(address targetMember, string memberName) onlyOwner {
+    uint id;
+    if (memberId[targetMember] == 0) {
+        memberId[targetMember] = members.length;
+        id = members.length++;
+        members[id] = Member({member: targetMember, memberSince: now, name: memberName});
+        MembershipChanged(targetMember, true);
+    }
+}",0.90385032,"function addMember(address targetMember, string memberName) onlyOwner public {
+
+        uint id = memberId[targetMember];
+
+        if (id == 0) {
+
+            memberId[targetMember] = members.length;
+
+            id = members.length++;
+
+        }
+
+
+
+        members[id] = Member({member: targetMember, memberSince: now, name: memberName});
+
+        emit MembershipChanged(targetMember, true);
+
+    }",3
+5077,104835,"function HTX () public {
+    owner = msg.sender;
+    uint256 devTokens = 1000000000e8;
+    distr(owner, devTokens);
+}",0.911285066,"function HTX () public {
+
+        owner = msg.sender;
+
+        uint256 devTokens = 1000000000e8;
+
+        distr(owner, devTokens);
+
+    }",0
+5209,12858,"function greeter(string _greeting) public {
+    greeting = _greeting;
+}",0.928680631,"function greeter(string _greeting) public {
+
+        greeting = _greeting;
+
+    }",0
+5312,360,"function buyTicket() payable public {
+    ",0.932933502,"function () payable public {
+        buyTickets();
+    }",3
+5382,1,"function transferOwnership(address newOwner) onlyOwner {
+   owner = newOwner;
+}",0.90317091,"function transferOwnership(address newOwner) onlyOwner public {
+        owner = newOwner;
+    }",0
+5466,50335,"function changeOwner() public {
+  owner = msg.sender;
+}",0.909992945,"function changeOwner() public {
+        _owner = msg.sender;
+    }",0
+5604,2898,"function setContactInformation(string info) onlyOwner{
+     contactInformation = info;    
+ }",0.942783675,"function setContactInformation(string info) onlyOwner {
+      contactInformation = info;
+  }",0
+5868,3340,"function deposit() public payable{
+    
+}",0.969287496,"function() public payable {
+        deposit();
+    }",3
+5885,14214,"function Crowdsale(
+    address ifSuccessfulSendTo,
+    uint fundingGoalInEthers,
+    uint durationInMinutes,
+    uint miliEtherCostOfEachToken,
+    address addressOfTokenUsedAsReward
+) {
+    beneficiary = ifSuccessfulSendTo;
+    fundingGoal = fundingGoalInEthers * 1 ether;
+    deadline = now + durationInMinutes * 1 minutes;
+
+    
+    price = miliEtherCostOfEachToken * 0.001 ether;
+
+    tokenReward = token(addressOfTokenUsedAsReward);
+}",0.947137694,"function Crowdsale(
+
+        address ifSuccessfulSendTo,
+
+        uint fundingGoalInEthers,
+
+        uint durationInMinutes,
+
+        uint etherCostOfEachToken,
+
+        address addressOfTokenUsedAsReward
+
+    ) public {
+
+        beneficiary = ifSuccessfulSendTo;
+
+        fundingGoal = fundingGoalInEthers * 1 ether;
+
+        deadline = now + durationInMinutes * 1 minutes;
+
+        price = etherCostOfEachToken * 1 ether;
+
+        tokenReward = token(addressOfTokenUsedAsReward);
+
+    }",3
+5897,27,"function transferOwnership (address newOwner) onlyOwner{
+    
+    if (newOwner != 0x0){
+        owner = newOwner;
+    }
+}",0.925673725,"function transferOwnership(address newOwner) onlyOwner {
+    if (newOwner != address(0)) {
+      owner = newOwner;
+    }
+  }",3
+6182,80629,"function MyAdvancedToken(
+    uint256 initialSupply,
+    string tokenName,
+    uint8 decimalUnits,
+    string tokenSymbol,
+    address centralMinter
+) {
+    if(centralMinter != 0 ) owner = msg.sender;         
+    balanceOf[msg.sender] = initialSupply;              
+    name = tokenName;                                   
+    symbol = tokenSymbol;                               
+    decimals = decimalUnits;                            
+    totalSupply = initialSupply;
+}",0.917529111,"function MyToken(
+
+        uint256 initialSupply,
+
+        string tokenName,
+
+        uint8 decimalUnits,
+
+        string tokenSymbol,
+
+        address centralMinter
+
+        ) public {
+
+        if (centralMinter != 0) owner = centralMinter;      
+
+        balanceOf[msg.sender] = initialSupply;              
+
+        totalSupply = initialSupply;                        
+
+        name = tokenName;                                   
+
+        symbol = tokenSymbol;                               
+
+        decimals = decimalUnits;                            
+
+    }",3
